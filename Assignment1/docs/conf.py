@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Sample documentation build configuration file, created by
+# Assignment1 documentation build configuration file, created by
 # sphinx-quickstart.
 #
 # This file is execfile()d with the current directory set to its containing dir.
@@ -41,7 +41,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Sample'
+project = u'Assignment1'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -164,7 +164,7 @@ html_static_path = ['_static']
 # html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'SampleRepodoc'
+htmlhelp_basename = 'Assignment1doc'
 
 
 # -- Options for LaTeX output --------------------------------------------------
@@ -184,9 +184,9 @@ latex_elements = {
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
     ('index',
-     'SampleRepo.tex',
-     u'Sample Documentation',
-     u"Shika", 'manual'),
+     'Assignment1.tex',
+     u'Assignment1 Documentation',
+     u"Shika Shyam", 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -215,8 +215,8 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'SampleRepo', u'Sample Documentation',
-     [u"Shika"], 1)
+    ('index', 'Assignment1', u'Assignment1 Documentation',
+     [u"Shika Shyam"], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -229,9 +229,9 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    ('index', 'SampleRepo', u'Sample Documentation',
-     u"Shika", 'Sample',
-     'Desc', 'Miscellaneous'),
+    ('index', 'Assignment1', u'Assignment1 Documentation',
+     u"Shika Shyam", 'Assignment1',
+     'Assignment 1 for DAMG 7245', 'Miscellaneous'),
 ]
 
 # Documents to append as an appendix to all manuals.

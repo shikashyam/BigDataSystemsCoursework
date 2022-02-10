@@ -4,7 +4,7 @@ setup(
     name='src',
     packages=find_packages(),
     version='0.1.0',
-    description='Desc',
-    author='Shika',
+    description='Assignment 1 for DAMG 7245',
+    author='Shika Shyam',
     license='MIT',
 )

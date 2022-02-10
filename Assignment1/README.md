@@ -1,7 +1,7 @@
-Sample
+Assignment1
 ==============================
 
-Desc
+Assignment 1 for DAMG 7245
 
 Project Organization
 ------------
