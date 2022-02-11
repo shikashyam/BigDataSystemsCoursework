@@ -2,6 +2,7 @@ Assignment1
 ==============================
 
 Assignment 1 for DAMG 7245
+The Google Codelabs documentation can be found here : https://codelabs-preview.appspot.com/?file_id=1IfKNyIsS9fVAYRIEa4f6pkPbfkwahV5lj2loFM35mz0#0
 
 Project Organization
 ------------
