@@ -65,18 +65,3 @@ async def make_nowcast_dataset(sevir: Sevir):
         "status" : "SUCCESS",
         "data" : sevir,
     }
-
-#@app.post('/search/')
-#async def search_catalog(sevir: Sevir):
-#    return "connetion established nowcast"
-
-#@app.get("/location/")
-#async def search_latitude_longitude(place:str):
-#    geolocator = Nominatim(user_agent="find")
-#    location = geolocator.geocode(place)
-#    return {location.latitude,location.longitude}
-
-
-#@app.get('/')
-#async def root():
-#    return {'message': 'Hello World!'}

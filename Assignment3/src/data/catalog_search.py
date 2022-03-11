@@ -16,17 +16,12 @@ import pandas as pd
 
 def searchcataloglatlong(lat, long):
     filename=None
-    #Search catalog for respective Event ID
     event_id,date=get_event_id(lat,long)
     print(event_id)
     if(event_id!='None'):
-        filename,fileindex,catalog=get_filename_index(event_id)
-        #event_id=835047
-        #Create H5 with only that event        
+        filename,fileindex,catalog=get_filename_index(event_id)       
         print(filename,fileindex)
         catalog.to_csv('/Users/sairaghavendraviravalli/Desktop/Projects/neurips-2020-sevir-master-3/src/data/CATALOG.csv')
-        #rpath=download_hf(filename)
-        #newfilepath=One_Sample_HF('/Users/sairaghavendraviravalli/Desktop/Projects/neurips-2020-sevir-master-3/src/data/', fileindex, filename)
         return filename,fileindex[0]
     else:
         return None,None
@@ -42,13 +37,9 @@ def searchcatalogdatetime(date,time,city,state):
     event_id = stormdetails[(stormdetails['BEGIN_YEARMONTH'] == int(yrmonth)) & (stormdetails['BEGIN_DAY']==int(day))& (stormdetails['BEGIN_TIME']==int(time)) & (stormdetails['CZ_NAME']==city)& (stormdetails['STATE']==state)]['EVENT_ID'].unique()[0]  
     print(event_id)
     if(event_id):
-        filename,fileindex,catalog=get_filename_index(event_id)
-        #event_id=835047
-        #Create H5 with only that event        
+        filename,fileindex,catalog=get_filename_index(event_id)      
         print(filename,fileindex)
         catalog.to_csv('/Users/sairaghavendraviravalli/Desktop/Projects/neurips-2020-sevir-master-3/src/data/CATALOG.csv')
-        #rpath=download_hf(filename)
-        #newfilepath=One_Sample_HF('/Users/sairaghavendraviravalli/Desktop/Projects/neurips-2020-sevir-master-3/src/data/', fileindex, filename)
         return filename,fileindex[0]
     else:
         return None,None
@@ -75,8 +66,6 @@ def get_filename_index(event_id):
     vilpd=catlog[(catlog["event_id"] == int(event_id)) & (catlog['img_type']=='vil')]
     filename=vilpd['file_name'].unique()
     fileindex = vilpd['file_index'].to_list()
-    #newcatalog=filtered[filtered['img_type']=='vil']
-    #print(newcatalog.head())
     catalog = pd.read_csv("https://raw.githubusercontent.com/MIT-AI-Accelerator/eie-sevir/master/CATALOG.csv")
     newcatalog=catalog[(catalog['file_name'].isin(allfilenames))]
     print(newcatalog.shape)
@@ -92,19 +81,14 @@ def download_hf(filename):
     for i in range(len(filename)):
         filename1 = "data/" + filename[i]
         print("Downloading",filename1)    
-       # os.mkdir('/Users/sairaghavendraviravalli/Desktop/Projects/neurips-2020-sevir-master-3/data/newh5')
         os.mkdir('/Users/sairaghavendraviravalli/Desktop/Projects/neurips-2020-sevir-master-3/data/vil/'+filename[i].split('/')[1])
         bucket.download_file(filename1 , '/Users/sairaghavendraviravalli/Desktop/Projects/neurips-2020-sevir-master-3/data/'+filename[i]) 
-        #path needs to be changed
         return '/Users/sairaghavendraviravalli/Desktop/Projects/neurips-2020-sevir-master-3/data/'+filename[i]
     
 def One_Sample_HF(directory,fileindex,filenames):
-    #filenames = next(walk(directory), (None, None, []))[2]  # [] if no file
     newfilepath=''
     for i in range(len(filenames)):
         print(directory+filenames[i])
-        # if filenames[i] == '.DS_Store':
-        #     continue
         with h5py.File(directory+filenames[i],'r') as hf:
             print(directory+"/"+filenames[i])
             image_type = filenames[i].split('_')[1]
