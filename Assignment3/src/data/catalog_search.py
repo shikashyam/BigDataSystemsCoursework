@@ -13,6 +13,31 @@ from botocore.handlers import disable_signing
 from os import walk
 import os
 import pandas as pd
+from geopy import distance
+from geopy import Point
+
+def searchgeocoordinates(approxlat,approxlong,distlimit):
+    catalog = pd.read_csv("https://raw.githubusercontent.com/MIT-AI-Accelerator/eie-sevir/master/CATALOG.csv")
+    catalog['lat']=(catalog.llcrnrlat+catalog.urcrnrlat)/2
+    catalog['long']=(catalog.llcrnrlon+catalog.urcrnrlon)/2
+    myloc=Point(approxlat,approxlong)
+    catalog['distance']=catalog.apply(lambda row: distancer(row,myloc), axis=1)
+    catalog=catalog[catalog["distance"] < int(distlimit)]
+
+    if catalog.empty:
+        return None,None
+    else:
+        catalog=catalog.sort_values(by='distance')
+        lat=catalog.iloc[0]['llcrnrlat']
+        long=catalog.iloc[0]['llcrnrlon']
+    
+    return lat,long
+
+def distancer(row,myloc):
+    coords_1 = myloc
+    coords_2 = (row['lat'], row['long'])
+    return distance.distance(coords_1, coords_2).miles
+
 
 def searchcataloglatlong(lat, long):
     filename=None

@@ -10,13 +10,14 @@ from typing import Any, Optional, List
 from make_nowcast_dataset import generate_data
 from nowcast import plot_results
 #import nowcast_generator as ng
-from catalog_search import searchcataloglatlong,searchcatalogdatetime
+from catalog_search import searchcataloglatlong,searchcatalogdatetime,searchgeocoordinates
 
 app = FastAPI()
 
 class Sevir(BaseModel):
     latitude: Optional[float] = None
     longitude:Optional[float] = None
+    distancelimit: Optional[float] = None
     date: str
     time: str
     city: str
@@ -33,8 +34,15 @@ async def create_sevir_view(sevir: Sevir):
     sevir_catalog='/Users/sairaghavendraviravalli/Desktop/Projects/neurips-2020-sevir-master-3/data/CATALOG.csv'
     # filter catalog.csv to have only one event id.
     output_location='/Users/sairaghavendraviravalli/Desktop/Projects/neurips-2020-sevir-master-3/data/interim/'
-    if((sevir.latitude!=None) & (sevir.longitude!=None)):
-        filename,idx=searchcataloglatlong(sevir.latitude,sevir.longitude)
+    if((sevir.latitude!=None) & (sevir.longitude!=None) & (sevir.distancelimit!=None)):
+        lat,long=searchgeocoordinates(sevir.latitude,sevir.longitude,sevir.distancelimit)
+        if(lat!=None):
+            filename,idx=searchcataloglatlong(lat,long)
+        else:
+            return {
+              "status" : "FAIL",
+              "reason": "No events found within specified distance limit",
+              }
     else:
         if((sevir.date!='')&(sevir.time!='')&(sevir.city!='')&(sevir.state!='')):
             filename,idx=searchcatalogdatetime(sevir.date,sevir.time,sevir.city,sevir.state)
