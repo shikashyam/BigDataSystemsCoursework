@@ -1,15 +1,11 @@
 from sre_constants import ANY
 from numpy import double, empty
-from geopy.geocoders import Nominatim
-import geopy
-#import nowcast
 from sqlite3 import Date
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI
 from pydantic import BaseModel
 from typing import Any, Optional, List
 from make_nowcast_dataset import generate_data
 from nowcast import plot_results
-#import nowcast_generator as ng
 from catalog_search import searchcataloglatlong,searchcatalogdatetime,searchgeocoordinates
 
 app = FastAPI()
@@ -66,10 +62,3 @@ async def create_sevir_view(sevir: Sevir):
               "status" : "FAIL",
               "reason": "matching event not found",
               }
-
-@app.post('/create/')
-async def make_nowcast_dataset(sevir: Sevir):
-    return {
-        "status" : "SUCCESS",
-        "data" : sevir,
-    }
