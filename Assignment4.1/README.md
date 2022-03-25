@@ -1,11 +1,33 @@
-Assignment2
+Assignment4-Part 1
 ==============================
 
-Assignment 2 for DAMG 7245
+Introduction
+==============================
+As part of the fourth assignment of DAMG 7245 we had to check if the entered longitude and latitude fall within a range of certain miles of the nearest longitude and latitude for a matching event id in our Nowcasting system. Write a function accordingly and display the nearest storm details. 
+
+Nowcasting system
+==============================
+* [Nowcasts](https://en.wikipedia.org/wiki/Nowcasting_(meteorology)) are short-term forecast of weather variables typically measured by weather radar or satellite.   Nowcasts are different from traditional weather forecasts in that they are based (mostly) on statistical extrapolations of recent data, rather than full physics-based numerical weather prediction (NWP) models.  
+* Nowcast are computed in a variety of ways, but one of the most common approaches is to apply optical flow techniques to a sequence of radar images.   These techniques track the motion of storm objects, which is then used to extrapolate the location of storms into the future.  
+
+Requirements
+==============================
+* Python 3.7
+* Jupyter Notebooks
+* Google Cloud Account
+
+SEVIR Tutorial
+==============================
+The SEVIR tutorial and Datasets can be found at :
+* [SEVIR tutorial](https://nbviewer.jupyter.org/github/MIT-AI-Accelerator/eie-sevir/blob/master/examples/SEVIR_Tutorial.ipynb)
+* [Storm Dataset](https://www.ncdc.noaa.gov/stormevents/ftp.jsp)
+* [SEVIR tutorial for event ID : 835047](https://github.com/BigDataArchitecture/Assignment1/blob/main/notebooks/eie-sevir/examples/SEVIR_Tutorial.ipynb)
+* To generate the sample.h5 file for above IPYNB File click [here](https://github.com/BigDataArchitecture/Assignment1/blob/main/notebooks/SEVIR_Data.ipynb)
 
 
-The Google Codelabs documentation can be found here : https://codelabs-preview.appspot.com/?file_id=14T8bxC18AEYXmz03KY7GjfOQeL4ZmAaSE3TB6AYB3rY#1
 
+
+Requirements make a folder SEVIR in the current directory 
 Project Organization
 ------------
 
