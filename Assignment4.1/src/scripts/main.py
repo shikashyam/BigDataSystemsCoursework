@@ -45,7 +45,7 @@ async def create_sevir_view(sevir: Sevir):
         if(lat!=None):
             filename,idx=searchcataloglatlong(lat,long)
         else:
-            raise HTTPException(status_code=404, detail="No events found within specified distance limit. Try increasing limit or removing distancelimit attribute")
+            raise HTTPException(status_code=404, detail="No events found within specified distance limit. Try increasing limit.")
 
     else:
         if((sevir.date!='')&(sevir.time!='')&(sevir.city!='')&(sevir.state!='')):

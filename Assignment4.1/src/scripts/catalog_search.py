@@ -16,12 +16,15 @@ import pandas as pd
 from geopy import distance
 from geopy import Point
 import gcsfs
+import numpy as np
 
 fs=gcsfs.GCSFileSystem(project="sevir-data-pipeline",token="cloud_storage_creds.json")
 
 def searchgeocoordinates(approxlat,approxlong,distlimit):
     catalog = pd.read_csv("https://raw.githubusercontent.com/MIT-AI-Accelerator/eie-sevir/master/CATALOG.csv")
     catalog=catalog[catalog['event_id'].isna()==False]
+    catalog=catalog[catalog['pct_missing']==0]
+    catalog=catalog[(catalog['file_name']=='vil/2019/SEVIR_VIL_STORMEVENTS_2019_0101_0630.h5') | (catalog['file_name']=='vil/2018/SEVIR_VIL_STORMEVENTS_2018_0101_0630.h5')]
     catalog['lat']=(catalog.llcrnrlat+catalog.urcrnrlat)/2
     catalog['long']=(catalog.llcrnrlon+catalog.urcrnrlon)/2
     myloc=Point(approxlat,approxlong)
@@ -72,10 +75,9 @@ def searchcatalogdatetime(date,time,city,state):
     event_id = stormdetails[(stormdetails['BEGIN_YEARMONTH'] == int(yrmonth)) & (stormdetails['BEGIN_DAY']==int(day))& (stormdetails['BEGIN_TIME']==int(time)) & (stormdetails['CZ_NAME']==city)& (stormdetails['STATE']==state)]['EVENT_ID'].unique()
 
     print(event_id)
-    if(event_id[0]):
+    if(np.size(event_id)>0):
         filename,fileindex,catalog=get_filename_index(event_id[0])      
         print(filename,fileindex)
-        #catalog.to_csv('/Users/sairaghavendraviravalli/Desktop/Projects/neurips-2020-sevir-master-3/src/data/CATALOG.csv')
         return filename,fileindex[0]
     else:
         return None,None
@@ -93,15 +95,19 @@ def get_event_id(lat,lon):
       print('Lat and long not found')
       date= 'None'
       event_id = 'None'
+    if(np.size(event_id)==0):
+        date='None'
+        event_id='None'
     return event_id,date
 
 def get_filename_index(event_id):
     catlog = pd.read_csv("https://raw.githubusercontent.com/MIT-AI-Accelerator/eie-sevir/master/CATALOG.csv")
     filtered = pd.DataFrame()
+    
     filtered = pd.concat([filtered,catlog[(catlog["event_id"] == int(event_id))]])
     allfilenames = filtered['file_name'].unique()
     
-    vilpd=catlog[(catlog["event_id"] == int(event_id)) & (catlog['img_type']=='vil')]
+    vilpd=catlog[(catlog["event_id"] == int(event_id)) & (catlog['img_type']=='vil') & (catlog['pct_missing']==0)]
     filename=vilpd['file_name'].unique()
     fileindex = vilpd['file_index'].to_list()
     catalog = pd.read_csv("https://raw.githubusercontent.com/MIT-AI-Accelerator/eie-sevir/master/CATALOG.csv")
@@ -118,8 +124,6 @@ def download_hf(filename):
     for i in range(len(filename)):
         filename1 = "data/" + filename[i]
         print("Downloading",filename1)    
-        #os.mkdir('/Users/sairaghavendraviravalli/Desktop/Projects/neurips-2020-sevir-master-3/data/vil/'+filename[i].split('/')[1])
-        #bucket.download_file(filename1 , '/Users/sairaghavendraviravalli/Desktop/Projects/neurips-2020-sevir-master-3/data/'+filename[i]) 
         return filename[i]
     
 def One_Sample_HF(directory,fileindex,filenames):
@@ -131,14 +135,7 @@ def One_Sample_HF(directory,fileindex,filenames):
             image_type = filenames[i].split('_')[1]
             
             if image_type == "VIL":
-                VIL = hf['vil'][int(fileindex[0])]
-                #os.mkdir('/Users/sairaghavendraviravalli/Desktop/Projects/neurips-2020-sevir-master-3/data/newh5')
-                #os.mkdir('/Users/sairaghavendraviravalli/Desktop/Projects/neurips-2020-sevir-master-3/data/newh5/vil')
-                #os.mkdir('/Users/sairaghavendraviravalli/Desktop/Projects/neurips-2020-sevir-master-3/data/newh5/vil/'+filenames[i].split('/')[1])
-                #hf2 = h5py.File('/Users/sairaghavendraviravalli/Desktop/Projects/neurips-2020-sevir-master-3/data/newh5/'+filenames[i], 'w')
-                #hf2.create_dataset('vil', data=VIL)
-                #newfilepath='/Users/sairaghavendraviravalli/Desktop/Projects/neurips-2020-sevir-master-3/data/vil/'+filenames[i].split('/')[1]+filenames[i].split('/')[2]       
-                
+                VIL = hf['vil'][int(fileindex[0])] 
     return "sample" 
 
     

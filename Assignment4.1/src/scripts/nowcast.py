@@ -10,6 +10,7 @@ import os
 import io
 import h5py
 import uuid
+from random import randrange
 import numpy as np
 os.environ["HDF5_USE_FILE_LOCKING"]='FALSE'
 import sys
@@ -330,7 +331,7 @@ def plot_hit_miss_fa(ax,y_true,y_pred,thres):
 
 def visualize_result(models,x_test,y_test,idx,labels):
     fs=10
-    #idx=0
+    idx=randrange(14)
     client = storage.Client.from_service_account_json('cloud_storage_creds.json')
     bucket = client.bucket('sevir-data')
     blob = bucket.blob('result_plot.png')
