@@ -4,25 +4,28 @@ Assignment 4-Part 1
 Introduction
 ==============================
 As part of the fourth assignment of DAMG 7245 we had to check if the entered longitude and latitude fall within a range of certain miles of the nearest longitude and latitude for a matching event id in our Nowcasting system. Write a function accordingly and display the nearest storm details. 
+The user can enter any lat and long as input and the API will search for the nearest event to that latitude and longitude and return the forecast.
 
 Nowcasting system
 ==============================
 * [Nowcasts](https://en.wikipedia.org/wiki/Nowcasting_(meteorology)) are short-term forecast of weather variables typically measured by weather radar or satellite.   Nowcasts are different from traditional weather forecasts in that they are based (mostly) on statistical extrapolations of recent data, rather than full physics-based numerical weather prediction (NWP) models.  
 * Nowcast are computed in a variety of ways, but one of the most common approaches is to apply optical flow techniques to a sequence of radar images.   These techniques track the motion of storm objects, which is then used to extrapolate the location of storms into the future.  
 
-Procedure
-==============================
-
 
 Heroku
 ==============================
-* Heroku is a container-based cloud Platform as a Service (PaaS). Developers use Heroku to deploy, manage, and scale modern apps. Our platform is elegant, flexible, and easy to use, offering developers the simplest path to getting their apps to market.
+* Heroku is a container-based cloud Platform as a Service (PaaS). Developers use Heroku to deploy, manage, and scale modern apps. Our platform is elegant, flexible, and easy to use, offering developers the simplest path to getting their apps to market. 
+* While Heroku is an easy to host platform there is a limitation of slugsize of 500 MB. Each build cannot exist 500MB. Considering we are using Tensorflow which is a heavy library and storing a bunch of interim data, we faced an issue with Heroku that we were not able to bring our slug size below 800MB when the API is being hit.
+
+GCP App Engine
+==============================
+* Due to the issues faced with Heroku, we have hosted our uvicorn based FastAPI code on GCP App Engine. The steps for doing the same are detailed in the codelabs document linked below.
 
 
 Web Application - Location based Nowcasting
 =============================================
 
-In this Application, we are generating the predicted images using the nowcast model by calling an API. As you can see below the application asks the user to input Latitude & Longitude along with the distance based on how far they want to see the storm prediction view the predicted images along with City, State, Date, and Time. Post giving the input we can generate the images using the nowcast model by invoking the API.
+In this Application, we are generating the predicted images using the nowcast model by calling an API. The application asks the user to input Latitude & Longitude along with the distance based on how far they want to see the storm prediction view the predicted images along with City, State, Date, and Time. After giving the input we can generate the images using the nowcast model by invoking the API.
 
 
 
@@ -35,6 +38,8 @@ Requirements
 * Heroku
 * Streamlit
 * Postman
+* GCPAppEngine
+
 
 
 
