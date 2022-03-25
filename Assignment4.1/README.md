@@ -27,7 +27,7 @@ In this Application, we are generating the predicted images using the nowcast mo
 
 
 <img width="520" alt="streamlit-2" src="streamlit-2.png">
-<img width="520" alt="streamlit-3" src="streamlit-3.png">
+<img width="520" alt="steramlit-3" src="steramlit-3.png">
 
 
 Requirements
