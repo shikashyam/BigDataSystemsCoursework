@@ -41,6 +41,10 @@ Requirements
 
 
 
+Codelabs Link
+==============================
+This is the link to open the codelabs document:https://codelabs-preview.appspot.com/?file_id=1IvbhpUhVSKuTQ4WAaOQDmnDMrKRV0XwwcWUDJFGra_M#5
+
 Project Organization
 ------------
 
