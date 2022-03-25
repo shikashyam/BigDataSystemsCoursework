@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "sevir-data-pipeline",
+  "private_key_id": "092e72a1e9f220601a3eaab65409eab35111d927",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDhCY/aQT8Kb53b\n43ePtiEDD8PiXTC4TNssh9qMvFrp0OYmGh/37tRgMq8F6L6xNRBD98Jywnhq7V8V\nax2taWVT/apsEplQPYC9lVlChsfN8FhgKSU6mRKAdOMfs0Ayq5i8FDNWk4rkQhxf\ndaiFhYU9gG8WTCq9MkOV33ESS2YjrG70/MHi4Zi+863vR/4MYy6yiNitaxONY/fo\nUFRzejPp2vRCZb2vMKe7LkJj6BK021JTYOliF9aowYxqwxnWBrf2WQGPUezPHdTV\nDpvedMFHhYvCKPxBOGgSavPrCt7r6layNCuOgbAff4lHZ1pr2u1JDrHOjThFZk8X\nbZC3q1XTAgMBAAECggEADFnnAFambB82LdRtQoD/jNh3qtvsiaEGQopuT10jLEQf\n7aVvbb84/tKpUoy0sqsz6lcV4BCWZWAD4PwRE+x9+D8q9GWM7p+BimZBEOqu2rm/\nT//SIEY4gr5nnNzMwDs01dXR/4V3kRGj1wVxK2rppjd/YVzq15mDph0uao+i2oBI\n+c24w+vUcUmbFliFaSzTvkDSQoDPGbomexhj3tPHeBlATQN7V7+X8ZmEkt6aocON\nE0HvUra0ctp3orjPrZklXAwbUgoSQ/GhObgivCsqoLmz8SI12a0wNS3qTf/bOE+h\nveJOgve17a+HXegBRxPBgK0ov77/tkWcK326vYuKmQKBgQDwaKYvpstH9oB9tOG/\nhVKHWnLJQnsOdfHfo/yGc2u+/9zTnjv7gPlzQZFsJIVAH15K7KJpiKWbonxDdp+5\nDx17ZYvFlugUU+pASXXrohUPid+ppzqHlrv/Q6Z+ItI4YyibPH38EZ0+NDPC6OfV\nYa2AomItSBwDML8h8siXljxN1QKBgQDvobX4Y8IGHewUi9ih5zMI6btaRBLZteyi\nrQc6Tl5uYANdnY9LGJWZT033vcWkgq+2tSxYX/TRFUsoReGWjX0z8LTL8A8CrynR\nXwSfIh5yDQz2L9hAb1cyDSzVKBOOHF/wutCPwwzyx9IR2Zizb+CpVCPpTykmeLIa\n6pOXUqnhBwKBgHwc6r7rE0NhpVBAk9M2Vzb9oQj6Q2Fhzq8wj+wxpkyC91Rg+oKL\nQT0ZeqQj7o7+IsX3iJmHLEg/CHwjv63gec38zL4DfGkSMXti8Xfmw4y0Fz4U0Yiy\nbvgHyuqPu4vU1V/fSQNbbJxygs57Q0TMGrCwJJNQCPY0slgqaRipPRTJAoGBAN6G\n4g/+u3+oq8HMt+hpZbgiLQw+6O5phYzvdyXK/uAqoxV9KkMHWmza+0FTZkVF4tyd\nU8fhm9vJlViZxEplq93e6lXz4EyS0xeN0CHisjkhK2c2uO/lNSjSmU58f+RZLzLC\nmMjXzZ9qtgZDdg0zmIJGE28mRsVmEabzLQm6Bu1jAoGBALBFivyC3TA6wPbO7sHp\nEqB2VoXFXF776ACa5I/lJKmAKvlwEsWhnU/eQr97Qv16UrygXWZvTpW3oubjL6De\nuGkjkdttVYjJXhaeSxuIFeM+Lxwp4SPT+JZFjnZ5BJq8e4/nPzR3FU3RfsgLlg8k\n6PTAfnHAaO+KeZDawFQgRl7e\n-----END PRIVATE KEY-----\n",
+  "client_email": "cloudstorage@sevir-data-pipeline.iam.gserviceaccount.com",
+  "client_id": "113387904314002515606",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/cloudstorage%40sevir-data-pipeline.iam.gserviceaccount.com"
+}

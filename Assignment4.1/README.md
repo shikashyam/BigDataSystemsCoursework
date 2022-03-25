@@ -1,49 +1,12 @@
-Assignment 4-Part 1
+Assignment3
 ==============================
 
-Introduction
-==============================
-As part of the fourth assignment of DAMG 7245 we had to check if the entered longitude and latitude fall within a range of certain miles of the nearest longitude and latitude for a matching event id in our Nowcasting system. Write a function accordingly and display the nearest storm details. 
+Assignment 3 for DAMG 7245 
 
-Nowcasting system
-==============================
-* [Nowcasts](https://en.wikipedia.org/wiki/Nowcasting_(meteorology)) are short-term forecast of weather variables typically measured by weather radar or satellite.   Nowcasts are different from traditional weather forecasts in that they are based (mostly) on statistical extrapolations of recent data, rather than full physics-based numerical weather prediction (NWP) models.  
-* Nowcast are computed in a variety of ways, but one of the most common approaches is to apply optical flow techniques to a sequence of radar images.   These techniques track the motion of storm objects, which is then used to extrapolate the location of storms into the future.  
+Here we are using the Nowcasting model provided by SEVIR and package it within an API using FastAPI. We will be creating the API end points and making it accessible to our end users which is the NOAA. Within the underlying code in the API, we will use the inputs from the User to find the respective event within the SEVIR database, and then use the nowcasting model to take the 12 images as input and return 12 images as output, which will be stored and the path made available to the user.
 
-Procedure
-==============================
-
-
-Heroku
-==============================
-* Heroku is a container-based cloud Platform as a Service (PaaS). Developers use Heroku to deploy, manage, and scale modern apps. Our platform is elegant, flexible, and easy to use, offering developers the simplest path to getting their apps to market.
-
-
-Web Application - Location based Nowcasting
-=============================================
-
-In this Application, we are generating the predicted images using the nowcast model by calling an API. As you can see below the application asks the user to input Latitude & Longitude along with the distance based on how far they want to see the storm prediction view the predicted images along with City, State, Date, and Time. Post giving the input we can generate the images using the nowcast model by invoking the API.
-
-
-
-<img width="520" alt="streamlit-2" src="streamlit-2.png">
-<img width="520" alt="steramlit-3" src="steramlit-3.png">
-
-
-Requirements
-==============================
-* Python 3.7
-* Jupyter Notebooks
-* Google Cloud Account
-* Heroku
-* Streamlit
-* Postman
-
-
-
-Codelabs Link
-==============================
-This is the link to open the codelabs document:https://codelabs-preview.appspot.com/?file_id=1IvbhpUhVSKuTQ4WAaOQDmnDMrKRV0XwwcWUDJFGra_M#5
+The codelabs document can be found here:
+https://codelabs-preview.appspot.com/?file_id=1igtVNAzM9fyD_d46_67MNus2XW2FihXgPBBE9Ywsnh8#6
 
 Project Organization
 ------------
