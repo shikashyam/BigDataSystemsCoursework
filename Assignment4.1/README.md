@@ -17,7 +17,17 @@ Procedure
 Heroku
 ==============================
 * Heroku is a container-based cloud Platform as a Service (PaaS). Developers use Heroku to deploy, manage, and scale modern apps. Our platform is elegant, flexible, and easy to use, offering developers the simplest path to getting their apps to market.
-* 
+
+
+Web Application - Location based Nowcasting
+=============================================
+
+In this Application, we are generating the predicted images using the nowcast model by calling an API. As you can see below the application asks the user to input Latitude & Longitude along with the distance based on how far they want to see the storm prediction view the predicted images along with City, State, Date, and Time. Post giving the input we can generate the images using the nowcast model by invoking the API.
+
+
+
+<img width="520" alt="Nowcast(loc,date,time)" src="Nowcast(Loc,Date,Time).png">
+
 
 Requirements
 ==============================
