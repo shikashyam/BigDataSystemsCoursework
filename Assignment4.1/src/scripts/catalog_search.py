@@ -66,7 +66,7 @@ def searchcataloglatlong(lat, long):
     #Filter catalog to include only that event
     
 def searchcatalogdatetime(date,time,city,state):
-    stormdetails_path=fs.open("gs://sevir-data/data/StormEvents_details-ftp_v1.0_d2019_c20220214.csv",'rb')
+    stormdetails_path=fs.open("gs://sevir-data-2/data/StormEvents_details-ftp_v1.0_d2019_c20220214.csv",'rb')
     stormdetails = pd.read_csv(stormdetails_path)
     date=date.replace('-','')
     yrmonth=date[0:6]
