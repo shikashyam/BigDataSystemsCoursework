@@ -3,7 +3,7 @@ import numpy as np
 import os
 import gcsfs
 
-filesys=gcsfs.GCSFileSystem(project="sevir-data-pipeline",token="cloud_storage_creds.json")
+filesys=gcsfs.GCSFileSystem(project="sevir-project-bdia",token="cloud_storage_creds.json")
 def run(data_path,filename, fileindex):
     # parent_dir = "/Users/parthshah/Documents/Northeastern/Spring2022/BigDataAnalytics/Assignment3/API/Intermediate_Files/"
     #path = "Dummy Variable plz delete"
