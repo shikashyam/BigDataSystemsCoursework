@@ -33,13 +33,13 @@ def read_root():
 
 @app.post('/input/')
 async def create_sevir_view(sevir: Sevir):
-    fs=gcsfs.GCSFileSystem(project="sevir-data-pipeline",token="cloud_storage_creds.json")
-    sevir_data="gs://sevir-data/data/"
+    fs=gcsfs.GCSFileSystem(project="sevir-project-bdia",token="cloud_storage_creds.json")
+    sevir_data="gs://sevir-data-2/data/"
     #sevir_data='/Users/sairaghavendraviravalli/Desktop/Projects/neurips-2020-sevir-master-3/data/' 
     # Save sevir data with name as original file.
-    sevir_catalog=fs.open("gs://sevir-data/data/CATALOG.csv",'rb')
+    sevir_catalog=fs.open("gs://sevir-data-2/data/CATALOG.csv",'rb')
     # filter catalog.csv to have only one event id.
-    output_location='gs://sevir-data/output/'
+    output_location='gs://sevir-data-2/output/'
     if((sevir.latitude!=None) & (sevir.longitude!=None) & (sevir.distancelimit!=None)):
         lat,long,event_id,filename,idx=searchgeocoordinates(sevir.latitude,sevir.longitude,sevir.distancelimit)
         if(lat!=None):
@@ -63,7 +63,7 @@ async def create_sevir_view(sevir: Sevir):
 
         fig=plot_results(result,output_location+'nowcast_testing.h5',idx)
         client = storage.Client.from_service_account_json('cloud_storage_creds.json')
-        bucket = client.bucket('sevir-data')
+        bucket = client.bucket('sevir-data-2')
         blob=bucket.get_blob('result_plot.png')
         img = Image.open(BytesIO(blob.download_as_bytes()))
         #return FileResponse(img)
