@@ -17,11 +17,11 @@ from tensorflow.keras.utils import GeneratorEnqueuer
 # List all avaialbe types
 TYPES    = ['vis','ir069','ir107','vil','lght']
 
-fs=gcsfs.GCSFileSystem(project="sevir-data-pipeline",token="cloud_storage_creds.json")
+fs=gcsfs.GCSFileSystem(project="sevir-project-bdia",token="cloud_storage_creds.json")
 import pathlib
 _thisdir = str(pathlib.Path(__file__).parent.absolute())
-DEFAULT_CATALOG   = fs.open("gs://sevir-data/data/CATALOG.csv",'rb')
-DEFAULT_DATA_HOME = fs.open("gs://sevir-data/data",'rb')
+DEFAULT_CATALOG   = fs.open("gs://sevir-data-2/data/CATALOG.csv",'rb')
+DEFAULT_DATA_HOME = fs.open("gs://sevir-data-2/data",'rb')
 
 # Nominal Frame time offsets in minutes (used for non-raster types)
 
