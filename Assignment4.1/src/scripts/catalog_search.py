@@ -18,7 +18,7 @@ from geopy import Point
 import gcsfs
 import numpy as np
 
-fs=gcsfs.GCSFileSystem(project="sevir-data-pipeline",token="cloud_storage_creds.json")
+fs=gcsfs.GCSFileSystem(project="sevir-project-bdia",token="cloud_storage_creds.json")
 
 def searchgeocoordinates(approxlat,approxlong,distlimit):
     catalog = pd.read_csv("https://raw.githubusercontent.com/MIT-AI-Accelerator/eie-sevir/master/CATALOG.csv")
