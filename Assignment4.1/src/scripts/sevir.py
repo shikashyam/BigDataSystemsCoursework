@@ -6,7 +6,7 @@ from PIL import Image
 import json
 import gcsfs
 
-fs=gcsfs.GCSFileSystem(project="sevir-data-pipeline",token="cloud_storage_creds.json")
+fs=gcsfs.GCSFileSystem(project="sevir-project-bdia",token="cloud_storage_creds.json")
 
 st.header("Location based Nowcasting")
 latitude = st.text_input("Enter Latitude:")
@@ -44,7 +44,7 @@ if st.button("Predict"):
     res2=res.json()
     if res2['detail']=='SUCCESS':
         print("inside if")
-        path=fs.open(f'gs://sevir-data/result_plot.png', 'rb')
+        path=fs.open(f'gs://sevir-data-2/result_plot.png', 'rb')
         image = Image.open(path)
         st.image(image, width=750)
     else:
