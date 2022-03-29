@@ -25,7 +25,7 @@ import gcsfs
 
 #args = parser.parse_args()
 
-fs=gcsfs.GCSFileSystem(project="sevir-data-pipeline",token="cloud_storage_creds.json")
+fs=gcsfs.GCSFileSystem(project="sevir-project-bdia",token="cloud_storage_creds.json")
    
 def generate_data(sevir_location,sevir_catalog,output_location,n_chunks=10):
     """ 
