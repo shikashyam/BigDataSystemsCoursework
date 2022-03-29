@@ -29,7 +29,7 @@ import uuid
 import gcsfs
 
 
-filesys=gcsfs.GCSFileSystem(project="sevir-data-pipeline",token="cloud_storage_creds.json")
+filesys=gcsfs.GCSFileSystem(project="sevir-project-bdia",token="cloud_storage_creds.json")
 
 
 def read_data(filename, rank=0, size=1, end=None, dtype=np.float32, MEAN=33.44, SCALE=47.54):
@@ -333,7 +333,7 @@ def visualize_result(models,x_test,y_test,idx,labels):
     fs=10
     idx=randrange(14)
     client = storage.Client.from_service_account_json('cloud_storage_creds.json')
-    bucket = client.bucket('sevir-data')
+    bucket = client.bucket('sevir-data-2')
     blob = bucket.blob('result_plot.png')
     cmap_dict = lambda s: {'cmap':get_cmap(s,encoded=True)[0],
                            'norm':get_cmap(s,encoded=True)[1],
@@ -437,7 +437,7 @@ def visualize_result(models,x_test,y_test,idx,labels):
 def plot_results(res,testing_file,idxin):
     #testing_file=filesys.open(f"gs://sevir-data/data/sample2.h5",'rb')
     #testing_data=h5py.File(testing_file,'r')
-    gan_file=filesys.open(f"gs://sevir-data/data/gan_generator.h5",'rb')
+    gan_file=filesys.open(f"gs://sevir-data-2/data/gan_generator.h5",'rb')
     gan_data=h5py.File(gan_file,'r')
     #gan_file = '/Users/sairaghavendraviravalli/Desktop/Projects/neurips-2020-sevir-master-3/src/data/gan_generator.h5'
     gan_model = tf.keras.models.load_model(gan_data,compile=False,custom_objects={"tf": tf})   
