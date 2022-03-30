@@ -22,7 +22,8 @@ fs=gcsfs.GCSFileSystem(project="sevir-project-bdia",token="cloud_storage_creds.j
 
 def searchincache(lat,long,distlimit):
     print('In Search cache function')
-    cache = pd.read_csv("sevir_cache.csv")
+    cache_file=fs.open("gs://sevir-data-2/data/sevir_cache.csv",'rb')
+    cache = pd.read_csv(cache_file)
     myloc=Point(lat,long)
     cache['distance']=cache.apply(lambda row: distancer(row,myloc), axis=1)
     cache=cache[cache["distance"] < int(distlimit)]
@@ -41,7 +42,7 @@ def searchgeocoordinates(approxlat,approxlong,distlimit):
     catalog = pd.read_csv("https://raw.githubusercontent.com/MIT-AI-Accelerator/eie-sevir/master/CATALOG.csv")
     catalog=catalog[catalog['event_id'].isna()==False]
     catalog=catalog[catalog['pct_missing']!=0]
-    
+
     catalog=catalog[(catalog['file_name']=='vil/2019/SEVIR_VIL_STORMEVENTS_2019_0101_0630.h5') | (catalog['file_name']=='vil/2018/SEVIR_VIL_STORMEVENTS_2018_0101_0630.h5')]
     catalog['lat']=(catalog.llcrnrlat+catalog.urcrnrlat)/2
     catalog['long']=(catalog.llcrnrlon+catalog.urcrnrlon)/2

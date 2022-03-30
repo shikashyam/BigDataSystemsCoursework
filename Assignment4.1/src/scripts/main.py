@@ -52,6 +52,7 @@ def search_by_loc(date,time,city,state):
             fig=plot_results(result,output_location+'nowcast_testing.h5',idx,event_id)
         
             data={
+            'result':'SUCCESS',
             'detail':fig
             }
         
@@ -79,6 +80,7 @@ def search_by_lat_long(latitude,longitude,distancelimit):
             # blob=bucket.get_blob('result_plot.png')
             # img = Image.open(BytesIO(blob.download_as_bytes()))        
             data={
+            'result':'SUCCESS',
             'detail':fig
             }
         
