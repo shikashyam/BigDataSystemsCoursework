@@ -20,10 +20,25 @@ import numpy as np
 
 fs=gcsfs.GCSFileSystem(project="sevir-project-bdia",token="cloud_storage_creds.json")
 
+def searchincache(lat,long,distlimit):
+    cache = pd.read_csv("sevir_cache.csv")
+    myloc=Point(lat,long)
+    cache['distance']=cache.apply(lambda row: distancer(row,myloc), axis=1)
+    cache=cache[cache["distance"] < int(distlimit)]
+
+    if cache.empty:
+        return 'N',None,None
+    else:
+        cache=cache.sort_values(by='distance')
+        fileloc=cache.iloc[0]['file_location'] 
+        timestamp=cache.iloc[0]['write_timestamp']     
+        print("Searched and found:",lat,":",long,":",fileloc)
+    return 'Y',timestamp,fileloc
+
 def searchgeocoordinates(approxlat,approxlong,distlimit):
     catalog = pd.read_csv("https://raw.githubusercontent.com/MIT-AI-Accelerator/eie-sevir/master/CATALOG.csv")
     catalog=catalog[catalog['event_id'].isna()==False]
-    catalog=catalog[catalog['pct_missing']==0]
+    catalog=catalog[catalog['pct_missing']!=0]
     catalog=catalog[(catalog['file_name']=='vil/2019/SEVIR_VIL_STORMEVENTS_2019_0101_0630.h5') | (catalog['file_name']=='vil/2018/SEVIR_VIL_STORMEVENTS_2018_0101_0630.h5')]
     catalog['lat']=(catalog.llcrnrlat+catalog.urcrnrlat)/2
     catalog['long']=(catalog.llcrnrlon+catalog.urcrnrlon)/2
@@ -50,20 +65,17 @@ def distancer(row,myloc):
     return distance.distance(coords_1, coords_2).miles
 
 
-def searchcataloglatlong(lat, long):
-    #filename=None
+def searchcataloglatlong(lat, long):    
     print("Inside SearchCatalogLatLong")
     event_id,date=get_event_id(lat,long)
     print(event_id)
     if((event_id!='None')):
         filename,fileindex,catalog=get_filename_index(event_id)       
         print(filename,fileindex)
-        #catalog.to_csv('/Users/sairaghavendraviravalli/Desktop/Projects/neurips-2020-sevir-master-3/src/data/CATALOG.csv')
         return filename,fileindex[0]
     else:
         return None,None
     
-    #Filter catalog to include only that event
     
 def searchcatalogdatetime(date,time,city,state):
     stormdetails_path=fs.open("gs://sevir-data-2/data/StormEvents_details-ftp_v1.0_d2019_c20220214.csv",'rb')
@@ -78,7 +90,7 @@ def searchcatalogdatetime(date,time,city,state):
     if(np.size(event_id)>0):
         filename,fileindex,catalog=get_filename_index(event_id[0])      
         print(filename,fileindex)
-        return filename,fileindex[0]
+        return filename,event_id[0],fileindex[0]
     else:
         return None,None
 def get_event_id(lat,lon):
@@ -107,7 +119,7 @@ def get_filename_index(event_id):
     filtered = pd.concat([filtered,catlog[(catlog["event_id"] == int(event_id))]])
     allfilenames = filtered['file_name'].unique()
     
-    vilpd=catlog[(catlog["event_id"] == int(event_id)) & (catlog['img_type']=='vil')]
+    vilpd=catlog[(catlog["event_id"] == int(event_id)) & (catlog['img_type']=='vil') & (catlog['pct_missing']!=0)]
     filename=vilpd['file_name'].unique()
     fileindex = vilpd['file_index'].to_list()
     catalog = pd.read_csv("https://raw.githubusercontent.com/MIT-AI-Accelerator/eie-sevir/master/CATALOG.csv")
@@ -137,5 +149,7 @@ def One_Sample_HF(directory,fileindex,filenames):
             if image_type == "VIL":
                 VIL = hf['vil'][int(fileindex[0])] 
     return "sample" 
+
+
 
     

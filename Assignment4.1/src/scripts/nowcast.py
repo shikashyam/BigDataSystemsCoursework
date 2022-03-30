@@ -7,6 +7,7 @@ Created on Wed Mar  9 17:33:49 2022
 Code to visualize the results from the nowcast model
 """
 import os
+import time
 import io
 import h5py
 import uuid
@@ -29,7 +30,7 @@ import uuid
 import gcsfs
 
 
-filesys=gcsfs.GCSFileSystem(project="sevir-project-bdia",token="cloud_storage_creds.json")
+filesys=gcsfs.GCSFileSystem(project="sevir-data-bdia",token="cloud_storage_creds.json")
 
 
 def read_data(filename, rank=0, size=1, end=None, dtype=np.float32, MEAN=33.44, SCALE=47.54):
@@ -329,12 +330,16 @@ def plot_hit_miss_fa(ax,y_true,y_pred,thres):
     ax.imshow(mask,cmap=cmap)
 
 
-def visualize_result(models,x_test,y_test,idx,labels):
+def visualize_result(models,x_test,y_test,idx,event_id,labels):
     fs=10
     idx=randrange(14)
     client = storage.Client.from_service_account_json('cloud_storage_creds.json')
     bucket = client.bucket('sevir-data-2')
-    blob = bucket.blob('result_plot.png')
+    print('IN VISUALIZE RESULTS FUNCTION: event_id is',event_id)
+    timeprint=time.strftime("%Y%m%d-%H%M%S")
+    print('TIME THINGY IS:',timeprint)
+    resfilename=str(event_id)+'_'+timeprint+'.png'
+    blob = bucket.blob(resfilename)
     cmap_dict = lambda s: {'cmap':get_cmap(s,encoded=True)[0],
                            'norm':get_cmap(s,encoded=True)[1],
                            'vmin':get_cmap(s,encoded=True)[2],
@@ -422,27 +427,23 @@ def visualize_result(models,x_test,y_test,idx,labels):
     blob.upload_from_string(buf.getvalue(),content_type='image/png')
 
     buf.close()
-    #fig.savefig(file_put_contents("gs://sevir-data/data/res/result.png", 'myresult.png'))
 
-    #myimage = filesys.open(f'gs://sevir-data/data/res/{name}', 'rb')
-    #image = Image.open('myresult.png')
-    #fig.savefig('./plot.png')   # save the figure to file
-    return 'myresult.png'
+    return resfilename
     
-    # name = f"{str(uuid.uuid4())}.png"
-    # imgRes = FS.open(f'gs://sevir-generated-files/result/{name}', 'wb')
-    # fig.savefig('/Users/shshyam/Downloads/neurips-2020-sevir-master-3/data', bbox_inches='tight')
   
     
-def plot_results(res,testing_file,idxin):
-    #testing_file=filesys.open(f"gs://sevir-data/data/sample2.h5",'rb')
-    #testing_data=h5py.File(testing_file,'r')
+def plot_results(res,testing_file,idxin,event_id):
+
     gan_file=filesys.open(f"gs://sevir-data-2/data/gan_generator.h5",'rb')
     gan_data=h5py.File(gan_file,'r')
-    #gan_file = '/Users/sairaghavendraviravalli/Desktop/Projects/neurips-2020-sevir-master-3/src/data/gan_generator.h5'
+
     gan_model = tf.keras.models.load_model(gan_data,compile=False,custom_objects={"tf": tf})   
-    #x_test,y_test = read_data(testing_file,end=50)
-    idx=idxin # adjust this to pick a case   
-    fig=visualize_result([gan_model],res['IN'],res['OUT'],idx,labels=['cGAN+MAE'])
+
+    idx=idxin
+    
+    event_id=event_id
+
+    print('InPlot results : event ID is:',event_id)
+    fig=visualize_result([gan_model],res['IN'],res['OUT'],idx,event_id,labels=['cGAN+MAE'])
     
     return fig

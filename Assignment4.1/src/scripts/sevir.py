@@ -40,7 +40,7 @@ data={
   "state": state
 }
 if st.button("Predict"):
-    res=requests.post("https://sevir-project-bdia.ue.r.appspot.com/input/", json=data)
+    res=requests.post("https://sevir-data-2-pipeline.uk.r.appspot.com/input/", json=data)
     res2=res.json()
     if res2['detail']=='SUCCESS':
         print("inside if")

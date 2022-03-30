@@ -50,7 +50,7 @@ def read_write_chunks( filename,generator, n_chunks ):
     logger.info('Gathering chunk 0/%s:' % n_chunks)
     X,Y=generator.load_batches(n_batches=chunksize,offset=0,progress_bar=True)
     # Create datasets
-    #filename=fs.open("gs://sevir-data/data/sample2.h5",'wb')
+    #filename=fs.open("gs://sevir-data-2/data/sample2.h5",'wb')
     with h5py.File(filename, 'w') as hf:
       hf.create_dataset('IN', data=X[0],  maxshape=(None,X[0].shape[1],X[0].shape[2],X[0].shape[3]))
       hf.create_dataset('OUT', data=Y[0], maxshape=(None,Y[0].shape[1],Y[0].shape[2],Y[0].shape[3]))
