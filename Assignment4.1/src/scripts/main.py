@@ -71,8 +71,8 @@ def search_by_lat_long(latitude,longitude,distancelimit):
         if(lat is None):
             raise HTTPException(status_code=404, detail="No events found within specified distance limit. Try increasing limit.")
         else:
-            
-            result=run(sevir_data,filename[0],idx)
+            print('Got stuff - ',filename)
+            result=run(sevir_data,filename,idx)
             fig=plot_results(result,output_location+'nowcast_testing.h5',idx,event_id)
             client = storage.Client.from_service_account_json('cloud_storage_creds.json')
             # bucket = client.bucket('sevir-data-2')
