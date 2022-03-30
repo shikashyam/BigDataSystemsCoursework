@@ -107,7 +107,7 @@ def get_filename_index(event_id):
     filtered = pd.concat([filtered,catlog[(catlog["event_id"] == int(event_id))]])
     allfilenames = filtered['file_name'].unique()
     
-    vilpd=catlog[(catlog["event_id"] == int(event_id)) & (catlog['img_type']=='vil') & (catlog['pct_missing']==0)]
+    vilpd=catlog[(catlog["event_id"] == int(event_id)) & (catlog['img_type']=='vil')]
     filename=vilpd['file_name'].unique()
     fileindex = vilpd['file_index'].to_list()
     catalog = pd.read_csv("https://raw.githubusercontent.com/MIT-AI-Accelerator/eie-sevir/master/CATALOG.csv")
