@@ -22,7 +22,7 @@ fs=gcsfs.GCSFileSystem(project="sevir-project-bdia",token="cloud_storage_creds.j
 
 def searchincache(lat,long,distlimit):
     print('In Search cache function')
-    cache_file=fs.open("gs://sevir-data-2/data/sevir_cache.csv",'rb')
+    cache_file=fs.open("gs://sevir-data-2/sevir_cache.csv",'rb')
     cache = pd.read_csv(cache_file)
     myloc=Point(lat,long)
     cache['distance']=cache.apply(lambda row: distancer(row,myloc), axis=1)
@@ -32,8 +32,8 @@ def searchincache(lat,long,distlimit):
         return 'N',None,None
     else:
         cache=cache.sort_values(by='distance')
-        fileloc=cache.iloc[0]['file_location'] 
-        timestamp=cache.iloc[0]['write_timestamp']     
+        fileloc=cache.iloc[0]['image_location'] 
+        timestamp=cache.iloc[0]['timestamp']     
         print("Searched and found:",lat,":",long,":",fileloc)
     return 'Y',timestamp,fileloc
 

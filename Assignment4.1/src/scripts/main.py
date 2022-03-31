@@ -18,6 +18,7 @@ from PIL import Image
 from auth.model import  UserSchema, UserLoginSchema
 from auth.auth_bearer import JWTBearer
 from auth.auth_handler import signJWT
+from datetime import datetime
 
 import csv
 
@@ -120,12 +121,15 @@ async def create_sevir_view(sevir: Sevir):
         FoundInCache,timestamp,fileloc = searchincache(sevir.latitude,sevir.longitude,sevir.distancelimit)
         #Found in Cache, check for threshold
         if(FoundInCache=='Y'):
-            now  = datetime.now()                         
-            duration = now - timestamp                        
+            now  = datetime.now()     
+            newtimestamp=datetime.strptime(timestamp,'%Y-%m-%d %H:%M:%S')                    
+            duration = now - newtimestamp                        
             duration_min = duration.total_seconds()/60
             #If threshold is okay, return image
-            if(duration_min<=sevir.threshold_time):
-                return fileloc
+            if(duration_min<=int(sevir.threshold_time)):
+                resultval={ 'result':'SUCCESS-FOUND IN CACHE',
+                'detail':fileloc}
+                return resultval
             #if Above threshold - hit model
             else:
                 return search_by_lat_long(sevir.latitude,sevir.longitude,sevir.distancelimit)
