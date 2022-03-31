@@ -13,3 +13,6 @@ tensorflow-cpu==2.8.0
 tqdm==4.62.3
 uvicorn==0.17.5
 pillow==7.1.2
+email-validator==1.1.2
+PyJWT==1.7.1
+python-decouple==3.3
