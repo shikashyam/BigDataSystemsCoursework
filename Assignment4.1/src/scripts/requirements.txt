@@ -13,4 +13,3 @@ tensorflow-cpu==2.8.0
 tqdm==4.62.3
 uvicorn==0.17.5
 pillow==7.1.2
-guvicorn==20.0.4
