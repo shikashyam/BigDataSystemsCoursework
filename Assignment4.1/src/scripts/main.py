@@ -178,7 +178,9 @@ async def create_sevir_view(sevir: Sevir):
 
 @app.post("/user/signup", tags=["user"])
 async def create_user(user: UserSchema = Body(...)):
+    # fs=gcsfs.GCSFileSystem(project="sevir-project-bdia",token="cloud_storage_creds.json")
     users.append(user) # replace with db call, making sure to hash the password first
+    # fs.open(f'gs://sevir-data-2/user_details.csv','rb')
     #print(list(user))   
     user1=dict(user)
     #print(dict(user))
@@ -194,18 +196,20 @@ async def create_user(user: UserSchema = Body(...)):
     print(user1)
     #user.append(p)
     fields=['fullname','email','password','access_token']
-    with open('user_details.csv', 'w') as f: 
-        Dict_obj=csv.DictWriter(f, fieldnames=fields)
-        Dict_obj.writerow(user1)
-        f.close()
-        # write = csv.writer(f) 
-        # write.writerow(fields) 
-        # #append_list_as_row('user_details.csv', c)
-        # write.writerows(c) 
-    client = storage.Client.from_service_account_json('cloud_storage_creds.json')
-    bucket=client.bucket('sevir-data-2')
-    blob=bucket.blob('user_details.csv')
-    blob.upload_from_filename('user_details.csv')
+    #df
+    # with open('user_details.csv', 'w') as f: 
+
+    #     Dict_obj=csv.DictWriter(f, fieldnames=fields)
+    #     Dict_obj.writerow(user1)
+    #     f.close()
+    #     # write = csv.writer(f) 
+    #     # write.writerow(fields) 
+    #     # #append_list_as_row('user_details.csv', c)
+    #     # write.writerows(c) 
+    # client = storage.Client.from_service_account_json('cloud_storage_creds.json')
+    # bucket=client.bucket('sevir-data-2')
+    # blob=bucket.blob('user_details.csv')
+    # blob.upload_from_filename('user_details.csv')
     #print(p)
     return p
 
