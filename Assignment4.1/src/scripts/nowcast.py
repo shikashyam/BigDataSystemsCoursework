@@ -344,12 +344,12 @@ def visualize_result(models,x_test,y_test,idx,event_id,labels):
                            'norm':get_cmap(s,encoded=True)[1],
                            'vmin':get_cmap(s,encoded=True)[2],
                            'vmax':get_cmap(s,encoded=True)[3]}
-    #fig,ax = plt.subplots(4,5,figsize=(24,8), gridspec_kw={'width_ratios': [1,.2,1,.2,1,1,1,1,1,1,1,1,1]})
+
     fig,ax = plt.subplots(12,7,figsize=(24,16),gridspec_kw={'width_ratios': [1,0.2,1,0.2,1,1,1]})
     for i in range(1,13):
         xt = x_test[idx,:,:,i]*norm['scale']+norm['shift']
         ax[(i-1)][0].imshow(xt,**cmap_dict('vil'))
-    ax[0][0].set_title('Inputs',fontsize=fs)
+    ax[0][0].set_title('Current Data',fontsize=fs)
     
     pers = persistence().predict(x_test[idx:idx+1])
     pers = pers*norm['scale']+norm['shift']
@@ -364,12 +364,12 @@ def visualize_result(models,x_test,y_test,idx,event_id,labels):
     
     for i in range(0,12):
         ax[i][2].imshow(y_test[0,:,:,i],**cmap_dict('vil'))
-    ax[0][2].set_title('Target',fontsize=fs)
+    ax[0][2].set_title('Nowcasting Data',fontsize=fs)
     
     # Plot Persistence
     for i in range(0,12):
         plot_hit_miss_fa(ax[i][4],y_test[0,:,:,i],pers[0,:,:,i],74)
-    ax[0][4].set_title('Persistence\nScores',fontsize=fs)
+    ax[0][4].set_title('Backtesting Hits and Misses',fontsize=fs)
     
     for k,m in enumerate(models):
         for i in range(0,12):
@@ -377,7 +377,7 @@ def visualize_result(models,x_test,y_test,idx,event_id,labels):
             plot_hit_miss_fa(ax[i][5+2*k+1],y_test[0,:,:,i],y_preds[k][0,:,:,i],74)
 
         ax[0][5+2*k].set_title(labels[k],fontsize=fs)
-        ax[0][5+2*k+1].set_title(labels[k]+'\nScores',fontsize=fs)
+        ax[0][5+2*k+1].set_title(labels[k]+'\nBacktesting Model Scores',fontsize=fs)
         
     for j in range(len(ax)):
         for i in range(len(ax[j])):
@@ -419,8 +419,6 @@ def visualize_result(models,x_test,y_test,idx,event_id,labels):
     ax[-1][-1].legend(handles=legend_elements, loc='lower right', bbox_to_anchor= (-5.4, -.35), 
                             ncol=5, borderaxespad=0, frameon=False, fontsize='16')
     plt.subplots_adjust(hspace=0.05, wspace=0.05)
-    # name = f"{str(uuid.uuid4())}.png"
-    # imgRes = filesys.open(f'gs://sevir-data/data/res/{name}', 'wb')
     buf=io.BytesIO()
     fig.savefig(buf, bbox_inches='tight',fomat='png')
     
@@ -444,6 +442,6 @@ def plot_results(res,testing_file,idxin,event_id):
     event_id=event_id
 
     print('InPlot results : event ID is:',event_id)
-    fig=visualize_result([gan_model],res['IN'],res['OUT'],idx,event_id,labels=['cGAN+MAE'])
+    fig=visualize_result([gan_model],res['IN'],res['OUT'],idx,event_id,labels=['cGAN+MAE Model'])
     
     return fig
