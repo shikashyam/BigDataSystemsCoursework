@@ -87,8 +87,8 @@ def search_by_loc(date,time,city,state):
             fig=plot_results(result,output_location+'nowcast_testing.h5',idx,event_id)
         
             data={
-            'result':'SUCCESS',
-            'detail':fig
+            'detail':'SUCCESS',
+            'result':fig
             }
         
             return data
@@ -115,8 +115,8 @@ def search_by_lat_long(latitude,longitude,distancelimit):
             # blob=bucket.get_blob('result_plot.png')
             # img = Image.open(BytesIO(blob.download_as_bytes()))        
             data={
-            'result':'SUCCESS',
-            'detail':fig
+            'detail':'SUCCESS',
+            'result':fig
             }
         
             return data
@@ -148,8 +148,8 @@ async def create_sevir_view(sevir: Sevir):
             duration_min = duration.total_seconds()/60
             #If threshold is okay, return image
             if(duration_min<=int(sevir.threshold_time)):
-                resultval={ 'result':'SUCCESS-FOUND IN CACHE',
-                'detail':fileloc}
+                resultval={ 'detail':'SUCCESS-FOUND IN CACHE',
+                'result':fileloc}
                 return resultval
             #if Above threshold - hit model
             else:
