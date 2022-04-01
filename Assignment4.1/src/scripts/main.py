@@ -229,7 +229,7 @@ async def user_login(user: UserLoginSchema = Body(...)):
     if check_user(user):
         p=signJWT(user.email)
         return {
-            'token': str(p['access_token'])
+            'token': p['access_token']
         }
     return {
         "error": "Wrong login details!"
