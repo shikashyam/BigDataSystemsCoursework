@@ -6,3 +6,5 @@ This Repository contains the shared work of
 1. Shika Shyam - 002194543
 2. Sai Viravalli - 001568587
 3. Saketh Vootla - 001568984
+
+Individual information about each assignment can be found within each folder's readme.
