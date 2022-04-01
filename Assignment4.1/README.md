@@ -134,6 +134,8 @@ Project Organization
 
 Contributions Statement
 ==============================
+Below are the contributions by the team members to create this App:
+
 1.Shika – 33.33%
 
 * Python Logic – Search by distances function
