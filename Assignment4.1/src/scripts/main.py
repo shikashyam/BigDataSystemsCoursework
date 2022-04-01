@@ -19,8 +19,12 @@ from auth.model import  UserSchema, UserLoginSchema
 from auth.auth_bearer import JWTBearer
 from auth.auth_handler import signJWT
 from datetime import datetime
-
+from google.cloud import bigquery
+import os
 import csv
+
+
+users = []
 
 app = FastAPI()
 
@@ -36,15 +40,32 @@ class Sevir(BaseModel):
     threshold_time: str
     SearchBy: str
 
-users = []
+class User(BaseModel):
+    fullname: str
+    email: str
+    password: str
+
+
    
 @app.get("/")
 def read_root():
     return {"Initialize message": "Welcome to Nowcast API"}
 
 def check_user(data: UserLoginSchema):
-    for user in users:
-        if user.email == data.email and user.password == data.password:
+    fs = gcsfs.GCSFileSystem(project='sevir-project-bdia', token = 'cloud_storage_creds.json')
+    file=fs.open(f"gs://sevir-data-2/auth/cloud_storage_creds.json",'rb')
+    credentials_path ='cloud_storage_creds.json'
+    os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credentials_path
+    client = bigquery.Client()
+    table_id = 'sevir-project-bdia.user_details.users'
+    QUERY =(
+            "SELECT * FROM `sevir-project-bdia.user_details.users` ;"
+        )
+    query_job = client.query(QUERY)  
+    rows = query_job.result()  
+    for row in rows:
+        #print(row.email)
+        if data.email == row.email and data.password == row.password:
             return True
     return False
 
@@ -184,48 +205,32 @@ async def create_sevir_view(sevir: Sevir):
 
 
 @app.post("/user/signup", tags=["user"])
-async def create_user(user: UserSchema = Body(...)):
-    # fs=gcsfs.GCSFileSystem(project="sevir-project-bdia",token="cloud_storage_creds.json")
-    users.append(user) # replace with db call, making sure to hash the password first
-    # fs.open(f'gs://sevir-data-2/user_details.csv','rb')
-    #print(list(user))   
-    user1=dict(user)
-    #print(dict(user))
-    #print(user1.values())
-    #print(signJWT(user.email))
+async def create_user(user: User):
+    users.append(user)
     p=signJWT(user.email)
-    #d={'token':p}
-    user1.update(p)
-    #user1.append(p)
-    #print(list(user1.values()))
-    c=list(user1.values())
-    #print(c)
-    print(user1)
-    #user.append(p)
-    fields=['fullname','email','password','access_token']
-    #df
-    # with open('user_details.csv', 'w') as f: 
-
-    #     Dict_obj=csv.DictWriter(f, fieldnames=fields)
-    #     Dict_obj.writerow(user1)
-    #     f.close()
-    #     # write = csv.writer(f) 
-    #     # write.writerow(fields) 
-    #     # #append_list_as_row('user_details.csv', c)
-    #     # write.writerows(c) 
-    # client = storage.Client.from_service_account_json('cloud_storage_creds.json')
-    # bucket=client.bucket('sevir-data-2')
-    # blob=bucket.blob('user_details.csv')
-    # blob.upload_from_filename('user_details.csv')
-    #print(p)
-    return p
-
+    fs = gcsfs.GCSFileSystem(project='sevir-project-bdia', token = 'cloud_storage_creds.json')
+    file=fs.open(f"gs://sevir-data-2/auth/cloud_storage_creds.json",'rb')
+    credentials_path ='cloud_storage_creds.json'
+    os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credentials_path
+    client = bigquery.Client()
+    table_id = 'sevir-project-bdia.user_details.users'
+    rows_to_insert = [
+        {u'fullname':user.fullname, 
+        u'email':user.email, 
+        u'password':user.password, 
+        u'access_token':p['access_token']},
+    ]
+    client.insert_rows_json(table_id, rows_to_insert)  
+    return p['access_token']
 
 
 @app.post("/user/login", tags=["user"])
 async def user_login(user: UserLoginSchema = Body(...)):
     if check_user(user):
-        return signJWT(user.email)
+        p=signJWT(user.email)
+        return {
+            'token': str(p['access_token'])
+        }
     return {
         "error": "Wrong login details!"
     }

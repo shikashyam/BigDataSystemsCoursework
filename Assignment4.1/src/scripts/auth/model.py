@@ -17,7 +17,7 @@ class PostSchema(BaseModel):
 
 class UserSchema(BaseModel):
     fullname: str = Field(...)
-    email: EmailStr = Field(...)
+    email: str = Field(...)
     password: str = Field(...)
 
     class Config:
@@ -30,7 +30,7 @@ class UserSchema(BaseModel):
         }
 
 class UserLoginSchema(BaseModel):
-    email: EmailStr = Field(...)
+    email: str = Field(...)
     password: str = Field(...)
 
     class Config:
