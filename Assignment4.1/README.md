@@ -135,11 +135,13 @@ Project Organization
 Contributions Statement
 ==============================
 1.Shika – 33.33%
+
 *Python Logic – Search by distances function
 *Python logic – Caching mechanism
 * GCP hosting and debugging of API
 *Airflow workflows 
- 2. Sai – 33.33%
+
+2. Sai – 33.33%
 *FastAPI
 *JWT Authentication
 *Postman testing
