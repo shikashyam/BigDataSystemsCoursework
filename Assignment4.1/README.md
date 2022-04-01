@@ -13,6 +13,10 @@ The Streamlit frontend now enables the user to choose if they want a fresh nowca
 
 Finally, the API endpoints are now secured with JWT tokens and can be accessed only by authenticated users which are tracked in a BigQuery table and all the users have their associated tokens which are used to access the API endpoint to enable nowcasting.
 
+Architecture Diagram
+==============================
+<img width="606" alt="image" src="https://user-images.githubusercontent.com/91291183/161310438-f01e7b86-429b-4b49-950c-1c0480e5ac06.png">
+
 
 Nowcasting system
 ==============================
