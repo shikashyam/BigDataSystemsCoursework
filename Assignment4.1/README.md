@@ -136,22 +136,24 @@ Contributions Statement
 ==============================
 1.Shika – 33.33%
 
-*Python Logic – Search by distances function
-*Python logic – Caching mechanism
+* Python Logic – Search by distances function
+* Python logic – Caching mechanism
 * GCP hosting and debugging of API
-*Airflow workflows 
+* Airflow workflows 
 
 2. Sai – 33.33%
-*FastAPI
-*JWT Authentication
-*Postman testing
-*Streamlit
+
+* FastAPI
+* JWT Authentication
+* Postman testing
+* Streamlit
 
 3.Saketh – 33.33%
-*Airflow setup
-*Hosting airflow on GCP
-*Documentation
-*Testing
+
+* Airflow setup
+* Hosting airflow on GCP
+* Documentation
+* Testing
 
 Attestation
 ==============================
