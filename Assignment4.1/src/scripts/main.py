@@ -159,7 +159,7 @@ async def create_sevir_view(sevir: Sevir):
             return search_by_lat_long(sevir.latitude,sevir.longitude,sevir.distancelimit)
     #Fell through all input possibilities
     else:
-            raise HTTPException(status_code=408, detail="Full fallthrough")
+            raise HTTPException(status_code=408, detail="Some Unexpected error occured. Please try again")
 
 
 
@@ -198,7 +198,7 @@ async def create_sevir_view(sevir: Sevir):
             return search_by_lat_long(sevir.latitude,sevir.longitude,sevir.distancelimit)
     #Fell through all input possibilities
     else:
-            raise HTTPException(status_code=408, detail="Full fallthrough")
+            raise HTTPException(status_code=408, detail="Some Unexpected error occured. Please try again")
 
 
 
