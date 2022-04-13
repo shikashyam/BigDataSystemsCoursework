@@ -86,51 +86,121 @@ https://github.com/Sairaghav1999/streamlit
 Project Organization
 ------------
 
-    ├── LICENSE
-    ├── Makefile           <- Makefile with commands like `make data` or `make train`
-    ├── README.md          <- The top-level README for developers using this project.
-    ├── data
-    │   ├── external       <- Data from third party sources.
-    │   ├── interim        <- Intermediate data that has been transformed.
-    │   ├── processed      <- The final, canonical data sets for modeling.
-    │   └── raw            <- The original, immutable data dump.
-    │
-    ├── docs               <- A default Sphinx project; see sphinx-doc.org for details
-    │
-    ├── models             <- Trained and serialized models, model predictions, or model summaries
-    │
-    ├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
-    │                         the creator's initials, and a short `-` delimited description, e.g.
-    │                         `1.0-jqp-initial-data-exploration`.
-    │
-    ├── references         <- Data dictionaries, manuals, and all other explanatory materials.
-    │
-    ├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
-    │   └── figures        <- Generated graphics and figures to be used in reporting
-    │
-    ├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
-    │                         generated with `pip freeze > requirements.txt`
-    │
-    ├── setup.py           <- makes project pip installable (pip install -e .) so src can be imported
-    ├── src                <- Source code for use in this project.
-    │   ├── __init__.py    <- Makes src a Python module
-    │   │
-    │   ├── data           <- Scripts to download or generate data
-    │   │   └── make_dataset.py
-    │   │
-    │   ├── features       <- Scripts to turn raw data into features for modeling
-    │   │   └── build_features.py
-    │   │
-    │   ├── models         <- Scripts to train models and then use trained models to make
-    │   │   │                 predictions
-    │   │   ├── predict_model.py
-    │   │   └── train_model.py
-    │   │
-    │   └── visualization  <- Scripts to create exploratory and results oriented visualizations
-    │       └── visualize.py
-    │
-    └── tox.ini            <- tox file with settings for running tox; see tox.readthedocs.io
-
+   .
+├── LICENSE
+├── Makefile
+├── NLP_NamedEntityRecognition
+│   ├── Dockerfile
+│   ├── functions
+│   │   └── get_model.py
+│   ├── handler.py
+│   ├── model
+│   │   ├── config.json
+│   │   ├── merges.txt
+│   │   ├── pytorch_model.bin
+│   │   ├── special_tokens_map.json
+│   │   ├── tokenizer_config.json
+│   │   └── vocab.json
+│   ├── requirements.txt
+│   └── serverless.yml
+├── NLP_Summarization
+│   ├── Dockerfile
+│   ├── functions
+│   │   └── get_model.py
+│   ├── handler.py
+│   ├── model
+│   │   ├── config.json
+│   │   ├── merges.txt
+│   │   ├── pytorch_model.bin
+│   │   ├── special_tokens_map.json
+│   │   ├── tokenizer.json
+│   │   ├── tokenizer_config.json
+│   │   └── vocab.json
+│   ├── requirements.txt
+│   └── serverless.yml
+├── README.md
+├── docs
+│   ├── Makefile
+│   ├── commands.rst
+│   ├── conf.py
+│   ├── getting-started.rst
+│   ├── index.rst
+│   └── make.bat
+├── models
+├── notebooks
+├── references
+├── reports
+│   └── figures
+├── requirements.txt
+├── runtime.txt
+├── setup.py
+├── sevir.py
+├── src
+│   ├── __init__.py
+│   ├── airflow_scripts
+│   │   ├── HitModel.py
+│   │   ├── SaveData.py
+│   │   ├── SelectLatLong.py
+│   │   └── Sevir_Caching.py
+│   ├── data
+│   ├── features
+│   │   ├── __init__.py
+│   │   └── build_features.py
+│   ├── models
+│   │   ├── __init__.py
+│   │   ├── predict_model.py
+│   │   └── train_model.py
+│   ├── scripts
+│   │   ├── CATALOG.csv
+│   │   ├── __pycache__
+│   │   │   ├── app1.cpython-39.pyc
+│   │   │   ├── app2.cpython-39.pyc
+│   │   │   ├── auth_bearer.cpython-39.pyc
+│   │   │   ├── auth_handler.cpython-39.pyc
+│   │   │   ├── catalog_search.cpython-38.pyc
+│   │   │   ├── catalog_search.cpython-39.pyc
+│   │   │   ├── main.cpython-38.pyc
+│   │   │   ├── main.cpython-39.pyc
+│   │   │   ├── make_nowcast_dataset.cpython-38.pyc
+│   │   │   ├── make_nowcast_dataset.cpython-39.pyc
+│   │   │   ├── model.cpython-39.pyc
+│   │   │   ├── multiapp.cpython-39.pyc
+│   │   │   ├── nowcast.cpython-38.pyc
+│   │   │   ├── nowcast.cpython-39.pyc
+│   │   │   ├── nowcast_data.cpython-38.pyc
+│   │   │   ├── nowcast_data.cpython-39.pyc
+│   │   │   ├── nowcast_generator.cpython-38.pyc
+│   │   │   ├── nowcast_generator.cpython-39.pyc
+│   │   │   ├── utils.cpython-38.pyc
+│   │   │   └── utils.cpython-39.pyc
+│   │   ├── app.yaml
+│   │   ├── auth
+│   │   │   ├── __pycache__
+│   │   │   │   ├── auth_bearer.cpython-38.pyc
+│   │   │   │   ├── auth_bearer.cpython-39.pyc
+│   │   │   │   ├── auth_handler.cpython-38.pyc
+│   │   │   │   ├── auth_handler.cpython-39.pyc
+│   │   │   │   ├── model.cpython-38.pyc
+│   │   │   │   └── model.cpython-39.pyc
+│   │   │   ├── auth_bearer.py
+│   │   │   ├── auth_handler.py
+│   │   │   └── model.py
+│   │   ├── catalog_search.py
+│   │   ├── cloud_storage_creds.json
+│   │   ├── main.py
+│   │   ├── make_nowcast_dataset.py
+│   │   ├── nowcast.py
+│   │   ├── nowcast_data.py
+│   │   ├── nowcast_generator.py
+│   │   ├── nowcast_reader.py
+│   │   ├── requirements.txt
+│   │   └── utils.py
+│   └── visualization
+│       ├── __init__.py
+│       └── visualize.py
+├── structure.json
+├── test_environment.py
+└── testcases.json
 
 --------
 
