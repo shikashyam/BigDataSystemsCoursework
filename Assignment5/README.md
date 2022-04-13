@@ -95,12 +95,6 @@ Project Organization
 │   │   └── get_model.py
 │   ├── handler.py
 │   ├── model
-│   │   ├── config.json
-│   │   ├── merges.txt
-│   │   ├── pytorch_model.bin
-│   │   ├── special_tokens_map.json
-│   │   ├── tokenizer_config.json
-│   │   └── vocab.json
 │   ├── requirements.txt
 │   └── serverless.yml
 ├── NLP_Summarization
@@ -109,13 +103,6 @@ Project Organization
 │   │   └── get_model.py
 │   ├── handler.py
 │   ├── model
-│   │   ├── config.json
-│   │   ├── merges.txt
-│   │   ├── pytorch_model.bin
-│   │   ├── special_tokens_map.json
-│   │   ├── tokenizer.json
-│   │   ├── tokenizer_config.json
-│   │   └── vocab.json
 │   ├── requirements.txt
 │   └── serverless.yml
 ├── README.md
@@ -201,6 +188,7 @@ Project Organization
 ├── structure.json
 ├── test_environment.py
 └── testcases.json
+
 
 ```
 
