@@ -86,7 +86,7 @@ https://github.com/Sairaghav1999/streamlit
 Project Organization
 ------------
 
-   .
+```bash
 ├── LICENSE
 ├── Makefile
 ├── NLP_NamedEntityRecognition
@@ -201,6 +201,8 @@ Project Organization
 ├── structure.json
 ├── test_environment.py
 └── testcases.json
+
+```
 
 --------
 
