@@ -5,15 +5,15 @@ https://share.streamlit.io/sairaghav1999/streamlit/main/app.py
 
 Introduction
 ==============================
-As part of the fifth assignment of DAMG 7245 we had to design and build 2 more API's to call the NLP models which are created on serverless lambda fucntions **Summerization and Named Entity Recognition**. The user can enter any latitude and longitude value as input and the API will search for the nearest event to that latitude and longitude and return the forecast along with a narrative of the evnent.
+As part of the fifth assignment of DAMG 7245 we had to design and build 2 more API's to call the NLP models which are created on serverless lambda fucntions **Summarization and Named Entity Recognition**. The user can enter any latitude and longitude value as input and the API will search for the nearest event to that latitude and longitude and return the forecast along with a summary and Named entity recognition of the event narrative.
 
 The API endpoints are secured with JWT tokens and can be accessed only by authenticated users which are tracked in a BigQuery table and all the users have their associated tokens which are used to access the API endpoint to enable nowcasting.
 
-Additionally, we have updated the web application so an authenticated user can only use upto 10 requests to call the API per day, All the calls are logged into the system and can be administered via a live dashboard.
+Additionally, we have updated the web application so an authenticated user can only use upto 10 requests to call the API per day, All the calls are logged into the system and can be observed via a live dashboard.
 
 The Dashboard reveals the user analytics and gives updated information on every user for the number of API calls and how many queries were invoked.
 
-The Serverless lambda functions which uses the Summerization and NER models are dockerized and hosted on the AWS platform
+The Serverless lambda functions on AWS hosts the dockerized Summarization and NER models.
 
 Architecture Diagram
 ==============================
@@ -38,7 +38,15 @@ Google Data Studio
 Web Application - Location based Nowcasting
 =============================================
 
-In this Application, we are generating the predicted images using the nowcast model by calling an API. The application asks the user to input Latitude & Longitude along with the distance based on how far they want to see the storm prediction view the predicted images along with City, State, Date, and Time. The user can mention if they would like fresh data or cached data as well as the acceptable threshold time in minuts. After giving the input we can generate the images using the nowcast model by invoking the API.
+* In this Application, we are generating the predicted images using the nowcast model by calling an API. The application asks the user to input Latitude & Longitude along with the distance based on how far they want to see the storm prediction view the predicted images along with City, State, Date, and Time. The user can mention if they would like fresh data or cached data as well as the acceptable threshold time in minuts. After giving the input we can generate the images using the nowcast model by invoking the API.
+
+NLP - Summarization & Named Entity Recognition
+===============================================
+
+* We have used pre-trained models from the Huggingface library for Summarization and NER. These models have been dockerized and the docker images uploaded to Amazon ECR.
+* From ECR the images are deployed to Lambda functions using the serverless framework. The tutorial was followed as per : https://www.philschmid.de/serverless-bert-with-huggingface-aws-lambda-docker
+* The Summarization Pipeline is available at :https://26tn29om40.execute-api.us-east-1.amazonaws.com/dev/qa
+* The NER pipeline is available at :https://0gaq5aa6r2.execute-api.us-east-1.amazonaws.com/dev/qa
 
 Docker
 ==============================
@@ -51,9 +59,9 @@ Docker
 JWT - Authorization
 ==============================
 
-*JSON Web Token (JWT) is an open standard (RFC 7519) that defines a compact and self-contained way for securely transmitting information between parties as a JSON object. This information can be verified and trusted because it is digitally signed. JWTs can be signed using a secret (with the HMAC algorithm) or a public/private key pair using RSA or ECDSA.
+* JSON Web Token (JWT) is an open standard (RFC 7519) that defines a compact and self-contained way for securely transmitting information between parties as a JSON object. This information can be verified and trusted because it is digitally signed. JWTs can be signed using a secret (with the HMAC algorithm) or a public/private key pair using RSA or ECDSA.
 
-*The process flow on the UI lets a user enter their username and password and the App authenticates them against the list of existing users in a BigQuery table, and if they are an approved user with an associated token, they are allowed to login and use the Nowcasting application.
+* The process flow on the UI lets a user enter their username and password and the App authenticates them against the list of existing users in a BigQuery table, and if they are an approved user with an associated token, they are allowed to login and use the Nowcasting application.
 
 
 
@@ -75,7 +83,7 @@ Requirements
 Technical Specifications Document
 ==============================
 This is the link to open the CLAAT document:
-https://codelabs-preview.appspot.com/?file_id=1pjhtG_WFLeXX97SfbXPW4mzLd9ZyuGAUlCMcyLwVapU#4
+https://codelabs-preview.appspot.com/?file_id=13WgeEb7XBjXLu391txQBBBCmHsl5iOAPBt3tvxx0874#0
 
 User Manual for the WebApp
 ==============================
@@ -204,26 +212,30 @@ Contributions Statement
 ==============================
 Below are the contributions by the team members to create this App:
 
-1.Shika – 33.33%
+1.Shika – 
 
-* Python Logic – Search by distances function
-* Python logic – Caching mechanism
+* Python Logic – Extract event narratives and episode narratives, and call NLP APIs for summarization and NER
+* GCP BigQuery - Extract Logs from logging table and preprocess data for the Dashboard
+* Live Data Studio Dashboard with important metrics related to WebApp
+* Summarization NLP model - Create, build, test, deploy, integrate
+* NER NLP model - Build, test, deploy, integrate
 * GCP hosting and debugging of API
-* Airflow workflows 
 
-2. Sai – 33.33%
+2. Sai – 
 
-* FastAPI
-* JWT Authentication
-* Postman testing
-* Streamlit
+* Streamlit Frontend updates
+* GCP Cloud function to extract logs from logger to Bigquery in realtime
+* BigQuery to store User access limits and User logs
+* BigQuery debugging
+* Integration Testing
 
-3.Saketh – 33.33%
+3.Saketh –
 
-* Airflow setup
-* Hosting airflow on GCP
+* NER Models research
 * Documentation
-* Testing
+* Readme
+* Architecture Diagram
+
 
 Attestation
 ==============================
