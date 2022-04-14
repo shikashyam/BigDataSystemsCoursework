@@ -294,7 +294,8 @@ async def create_user(user: User):
         {u'fullname':user.fullname, 
         u'email':user.email, 
         u'password':user.password, 
-        u'access_token':p['access_token']},
+        u'access_token':p['access_token'],
+        u'No_of_Attempts': 0},
     ]
     client.insert_rows_json(table_id, rows_to_insert)  
     return p['access_token']
