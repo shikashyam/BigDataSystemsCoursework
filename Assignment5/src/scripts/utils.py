@@ -130,7 +130,7 @@ class SEVIRSequence(Sequence):
         self.y_img_types = y_img_types
         if isinstance(catalog,(str,)):
             self.catalog=pd.read_csv(catalog,parse_dates=['time_utc'],low_memory=False)
-            print("inside utils")
+            
             self.catalog.head()
            
         else:

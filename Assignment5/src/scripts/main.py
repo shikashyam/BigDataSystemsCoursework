@@ -66,7 +66,7 @@ def check_user(data: UserLoginSchema):
     query_job = client.query(QUERY)  
     rows = query_job.result()  
     for row in rows:
-        #print(row.email)
+        
         if data.email == row.email and data.password == row.password:
             return True
     return False
@@ -119,11 +119,13 @@ def search_by_loc(date,time,city,state):
     sevir_catalog=fs.open("gs://sevir-data-2/data/CATALOG.csv",'rb')
     output_location='gs://sevir-data-2/output/'
     print('In search by Location function')
+    print('LOG : City :',city)
+    print('LOG : State :',state)
     if((date!='')&(time!='')&(city!='')&(state!='')):
         filename,event_id,idx,eventsummary,episodesummary=searchcatalogdatetime(date,time,city,state)
         
         inputtext=episodesummary+eventsummary
-        print(type(inputtext))
+        
         
         summary=Summarization(inputtext)
         ner=NER(inputtext)
@@ -157,7 +159,7 @@ def search_by_lat_long(latitude,longitude,distancelimit):
         if(lat is None):
             raise HTTPException(status_code=404, detail="No events found within specified distance limit. Try increasing limit.")
         else:
-            print('Got stuff - ',filename)
+            
             result=run(sevir_data,filename,idx)
             fig=plot_results(result,output_location+'nowcast_testing.h5',idx,event_id)
             client = storage.Client.from_service_account_json('cloud_storage_creds.json')
@@ -166,7 +168,7 @@ def search_by_lat_long(latitude,longitude,distancelimit):
                 ner='No Event/Episode Narratives available for the Event'
             else:
                 inputtext=episodesummary+eventsummary
-                print(type(inputtext))               
+                
                 summary=Summarization(inputtext)
                 ner=NER(inputtext)
 
@@ -189,6 +191,10 @@ async def create_sevir_view(sevir: Sevir):
     SearchBy=sevir.SearchBy
     refresh_flag=sevir.refresh_flag
     threshold_time=sevir.threshold_time
+    print('LOG : APICall :',1)
+    print('LOG : SearchBy :', SearchBy)
+    print('LOG : Refresh_Flag :' ,refresh_flag)
+    print('LOG : Threshold_Time :', threshold_time)
     #Case 1: Search by Location (No Cache logic)
     if ((SearchBy == 'Loc')):
         return search_by_loc(sevir.date,sevir.time,sevir.city,sevir.state)
@@ -207,7 +213,7 @@ async def create_sevir_view(sevir: Sevir):
             #If threshold is okay, return image
             if(duration_min<=int(sevir.threshold_time)):
                 eventid=fileloc.split('.')[0]
-                print(float(eventid))
+                
                 evsummary,evsummary=findstormdetails(float(eventid))
                 inputtext=evsummary+evsummary
                 summary=Summarization(inputtext)
@@ -232,10 +238,15 @@ async def create_sevir_view(sevir: Sevir):
 
 @app.post('/input/airflow/')
 async def create_sevir_view(sevir: Sevir):
-
+   
     SearchBy=sevir.SearchBy
     refresh_flag=sevir.refresh_flag
     threshold_time=sevir.threshold_time
+    print('LOG : TypeOfRun : airflow')
+    print('LOG : APICall :',1)
+    print('LOG : SearchBy :', SearchBy)
+    print('LOG : Refresh_Flag :' ,refresh_flag)
+    print('LOG : Threshold_Time :', threshold_time)
     #Case 1: Search by Location (No Cache logic)
     if ((SearchBy == 'Loc')):
         return search_by_loc(sevir.date,sevir.time,sevir.city,sevir.state)
@@ -254,7 +265,7 @@ async def create_sevir_view(sevir: Sevir):
             #If threshold is okay, return image
             if(duration_min<=int(sevir.threshold_time)):
                 eventid=fileloc.split('.')[0]
-                print(float(eventid))
+                
                 evsummary,evsummary=findstormdetails(float(eventid))
                 inputtext=evsummary+evsummary
                 summary=Summarization(inputtext)

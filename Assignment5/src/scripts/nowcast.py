@@ -337,7 +337,7 @@ def visualize_result(models,x_test,y_test,idx,event_id,labels):
     bucket = client.bucket('sevir-data-2')
     print('IN VISUALIZE RESULTS FUNCTION: event_id is',event_id)
     timeprint=time.strftime("%Y%m%d-%H%M%S")
-    print('TIME THINGY IS:',timeprint)
+    
     resfilename=str(int(event_id))+'.png'
     blob = bucket.blob(resfilename)
     cmap_dict = lambda s: {'cmap':get_cmap(s,encoded=True)[0],

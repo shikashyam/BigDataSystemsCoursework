@@ -6,7 +6,7 @@ import gcsfs
 filesys=gcsfs.GCSFileSystem(project="sevir-project-bdia",token="cloud_storage_creds.json")
 def run(data_path,filename,fileindex):
     file_path = data_path + filename
-    print(file_path)
+    
     sevirfile=filesys.open(file_path,'rb')
     data = h5py.File(sevirfile, 'r')
     s = np.s_[fileindex-1:fileindex:fileindex+1]
