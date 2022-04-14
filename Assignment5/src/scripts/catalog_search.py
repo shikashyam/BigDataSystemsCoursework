@@ -109,11 +109,12 @@ def searchcatalogdatetime(date,time,city,state):
     day=date[6:8]
     time=time.replace(':','')
     event_id = stormdetails[(stormdetails['BEGIN_YEARMONTH'] == int(yrmonth)) & (stormdetails['BEGIN_DAY']==int(day))& (stormdetails['BEGIN_TIME']==int(time)) & (stormdetails['CZ_NAME']==city)& (stormdetails['STATE']==state)]['EVENT_ID'].unique()
-    eventsummary=stormdetails[(stormdetails['EVENT_ID']==event_id[0])]['EVENT_NARRATIVE'].unique()
-    episodesummary=stormdetails[(stormdetails['EVENT_ID']==event_id[0])]['EPISODE_NARRATIVE'].unique()
+    
     
     if(np.size(event_id)>0):
-        filename,fileindex,catalog=get_filename_index(event_id[0])      
+        filename,fileindex,catalog=get_filename_index(event_id[0])
+        eventsummary=stormdetails[(stormdetails['EVENT_ID']==event_id[0])]['EVENT_NARRATIVE'].unique()
+        episodesummary=stormdetails[(stormdetails['EVENT_ID']==event_id[0])]['EPISODE_NARRATIVE'].unique()
         if(np.size(fileindex)>0):
             return filename,event_id[0],fileindex[0],eventsummary[0],episodesummary[0]
         else:
