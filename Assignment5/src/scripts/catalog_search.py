@@ -29,13 +29,14 @@ def searchincache(lat,long,distlimit):
     cache=cache[cache["distance"] < int(distlimit)]
 
     if cache.empty:
-        return 'N',None,None
+        return 'N',None,None,None
     else:
         cache=cache.sort_values(by='distance')
         fileloc=cache.iloc[0]['image_location'] 
         timestamp=cache.iloc[0]['timestamp']     
         print("Searched and found:",lat,":",long,":",fileloc)
-    return 'Y',timestamp,fileloc
+        textnarrative='FUNCTIONALITY NOT SET YET'
+    return 'Y',timestamp,fileloc,textnarrative
 
 def searchgeocoordinates(approxlat,approxlong,distlimit):
     print('In search GeoCoordinates function')
@@ -51,7 +52,7 @@ def searchgeocoordinates(approxlat,approxlong,distlimit):
     catalog=catalog[catalog["distance"] < int(distlimit)]
 
     if catalog.empty:
-        return None,None,None,None,None
+        return None,None,None,None,None,None,None
     else:
         catalog=catalog.sort_values(by='distance')
         lat=catalog.iloc[0]['llcrnrlat']
@@ -59,9 +60,21 @@ def searchgeocoordinates(approxlat,approxlong,distlimit):
         event_id=catalog.iloc[0]['event_id']
         filename=catalog.iloc[0]['file_name']
         fileidx=catalog.iloc[0]['file_index']
-        
+        eventsummary,episodesummary=findstormdetails(event_id)
         print(" ",lat,":",long,":",event_id,":",filename,":",fileidx)
-    return round(lat,6),round(long,6),event_id,filename,fileidx
+        if eventsummary is None:
+            eventsummary=''
+            episodesummary=''
+    return round(lat,6),round(long,6),event_id,filename,fileidx,eventsummary,episodesummary
+def findstormdetails(event_id):
+    stormdetails_path=fs.open("gs://sevir-data-2/data/storm_details_file.csv",'rb')
+    stormdetails = pd.read_csv(stormdetails_path)   
+    eventsummary=stormdetails[(stormdetails['EVENT_ID']==event_id)]['EVENT_NARRATIVE'].unique()
+    episodesummary=stormdetails[(stormdetails['EVENT_ID']==event_id)]['EPISODE_NARRATIVE'].unique()
+    if(np.size(eventsummary)>0):
+        return eventsummary[0],episodesummary[0]
+    else:
+        return None,None
 
 def distancer(row,myloc):
     coords_1 = myloc
@@ -82,21 +95,22 @@ def searchcataloglatlong(lat, long):
     
     
 def searchcatalogdatetime(date,time,city,state):
-    stormdetails_path=fs.open("gs://sevir-data-2/data/StormEvents_details-ftp_v1.0_d2019_c20220214.csv",'rb')
+    stormdetails_path=fs.open("gs://sevir-data-2/data/storm_details_file.csv",'rb')
     stormdetails = pd.read_csv(stormdetails_path)
     date=date.replace('-','')
     yrmonth=date[0:6]
     day=date[6:8]
     time=time.replace(':','')
     event_id = stormdetails[(stormdetails['BEGIN_YEARMONTH'] == int(yrmonth)) & (stormdetails['BEGIN_DAY']==int(day))& (stormdetails['BEGIN_TIME']==int(time)) & (stormdetails['CZ_NAME']==city)& (stormdetails['STATE']==state)]['EVENT_ID'].unique()
-
+    eventsummary=stormdetails[(stormdetails['EVENT_ID']==event_id[0])]['EVENT_NARRATIVE'].unique()
+    episodesummary=stormdetails[(stormdetails['EVENT_ID']==event_id[0])]['EPISODE_NARRATIVE'].unique()
     print(event_id)
     if(np.size(event_id)>0):
         filename,fileindex,catalog=get_filename_index(event_id[0])      
         print(filename,fileindex)
-        return filename,event_id[0],fileindex[0]
+        return filename,event_id[0],fileindex[0],eventsummary[0],episodesummary[0]
     else:
-        return None,None
+        return None,None,None,None,None
 def get_event_id(lat,lon):
     print('inside geteventid')
     df1 = pd.read_csv("https://raw.githubusercontent.com/MIT-AI-Accelerator/eie-sevir/master/CATALOG.csv")
