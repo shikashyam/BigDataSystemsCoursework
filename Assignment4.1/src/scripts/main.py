@@ -163,7 +163,6 @@ async def create_sevir_view(sevir: Sevir):
 
 
 
-
 @app.post('/input/airflow/')
 async def create_sevir_view(sevir: Sevir):
 
@@ -201,9 +200,6 @@ async def create_sevir_view(sevir: Sevir):
             raise HTTPException(status_code=408, detail="Some Unexpected error occured. Please try again")
 
 
-
-
-
 @app.post("/user/signup", tags=["user"])
 async def create_user(user: User):
     users.append(user)
@@ -218,7 +214,7 @@ async def create_user(user: User):
         {u'fullname':user.fullname, 
         u'email':user.email, 
         u'password':user.password, 
-        u'access_token':"samplename"},
+        u'access_token':p['access_token']},
     ]
     client.insert_rows_json(table_id, rows_to_insert)  
     return p['access_token']
