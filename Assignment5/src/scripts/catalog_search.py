@@ -35,8 +35,7 @@ def searchincache(lat,long,distlimit):
         fileloc=cache.iloc[0]['image_location'] 
         timestamp=cache.iloc[0]['timestamp']     
         print("Searched and found:",lat,":",long,":",fileloc)
-        print('LOG : Lat :',lat)
-        print('LOG : Long :',long)
+        print('LOG : SearchBy : LatLong, Refresh_flag : N, Threshold_time : N/A, Lat :',lat,', Long :', long,', City : N/A, State : N/A, EventID :',float(fileloc.split('.')[0]))
         textnarrative='FUNCTIONALITY NOT SET YET'
     return 'Y',timestamp,fileloc,textnarrative
 
@@ -62,7 +61,7 @@ def searchgeocoordinates(approxlat,approxlong,distlimit):
         event_id=catalog.iloc[0]['event_id']
         filename=catalog.iloc[0]['file_name']
         fileidx=catalog.iloc[0]['file_index']
-        print('LOG : Event_id :',event_id)
+        
         eventsummary,episodesummary=findstormdetails(event_id)
         
         if eventsummary is None:
@@ -107,7 +106,7 @@ def searchcatalogdatetime(date,time,city,state):
     event_id = stormdetails[(stormdetails['BEGIN_YEARMONTH'] == int(yrmonth)) & (stormdetails['BEGIN_DAY']==int(day))& (stormdetails['BEGIN_TIME']==int(time)) & (stormdetails['CZ_NAME']==city)& (stormdetails['STATE']==state)]['EVENT_ID'].unique()
     eventsummary=stormdetails[(stormdetails['EVENT_ID']==event_id[0])]['EVENT_NARRATIVE'].unique()
     episodesummary=stormdetails[(stormdetails['EVENT_ID']==event_id[0])]['EPISODE_NARRATIVE'].unique()
-    print('LOG : Event_id :',event_id[0])
+    
     if(np.size(event_id)>0):
         filename,fileindex,catalog=get_filename_index(event_id[0])      
         
