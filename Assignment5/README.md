@@ -1,17 +1,19 @@
-Assignment 4 – Nowcasting WebApp
+Assignment 5 – Implementation of Serverless BERT
 ==============================
 
 https://share.streamlit.io/sairaghav1999/streamlit/main/app.py
 
 Introduction
 ==============================
-As part of the fourth assignment of DAMG 7245 we had to check if the entered longitude and latitude fall within a range of certain miles of the nearest longitude and latitude for a matching event id in our Nowcasting system.  The user can enter any latitude and longitude value as input and the API will search for the nearest event to that latitude and longitude and return the forecast.
+As part of the fifth assignment of DAMG 7245 we had to design and build 2 more API's to call the NLP models which are created on serverless lambda fucntions **Summerization and Named Entity Recognition**. The user can enter any latitude and longitude value as input and the API will search for the nearest event to that latitude and longitude and return the forecast along with a narrative of the evnent.
 
-Additionally, we have implemented a result caching system for SEVIR. There is an airflow workflow that runs hourly and caches the results for SEVIR nowcasting for 50 events from the Catalog.
+The API endpoints are secured with JWT tokens and can be accessed only by authenticated users which are tracked in a BigQuery table and all the users have their associated tokens which are used to access the API endpoint to enable nowcasting.
 
-The Streamlit frontend now enables the user to choose if they want a fresh nowcasting result or a cache and specify a number of minutes threshold for acceptable cache data. 
+Additionally, we have updated the web application so an authenticated user can only use upto 10 requests to call the API per day, All the calls are logged into the system and can be administered via a live dashboard.
 
-Finally, the API endpoints are now secured with JWT tokens and can be accessed only by authenticated users which are tracked in a BigQuery table and all the users have their associated tokens which are used to access the API endpoint to enable nowcasting.
+The Dashboard reveals the user analytics and gives updated information on every user for the number of API calls and how many queries were invoked.
+
+The Serverless lambda functions which uses the Summerization and NER models are dockerized and hosted on the AWS platform
 
 Architecture Diagram
 ==============================
@@ -23,29 +25,28 @@ Nowcasting system
 * [Nowcasts](https://en.wikipedia.org/wiki/Nowcasting_(meteorology)) are short-term forecast of weather variables typically measured by weather radar or satellite.   Nowcasts are different from traditional weather forecasts in that they are based (mostly) on statistical extrapolations of recent data, rather than full physics-based numerical weather prediction (NWP) models.  
 * Nowcast are computed in a variety of ways, but one of the most common approaches is to apply optical flow techniques to a sequence of radar images.   These techniques track the motion of storm objects, which is then used to extrapolate the location of storms into the future.  
 
-Heroku
+Google Big Query
 ==============================
-* Heroku is a container-based cloud Platform as a Service (PaaS). Developers use Heroku to deploy, manage, and scale modern apps. Our platform is elegant, flexible, and easy to use, offering developers the simplest path to getting their apps to market. 
-* While Heroku is an easy to host platform there is a limitation of slugsize of 500 MB. Each build cannot exist 500MB. Considering we are using Tensorflow which is a heavy library and storing a bunch of interim data, we faced an issue with Heroku that we were not able to bring our slug size below 800MB when the API is being hit.
+* BigQuery is a fully managed enterprise data warehouse that helps you manage and analyze your data with built-in features like machine learning, geospatial analysis, and business intelligence.
+* BigQuery maximizes flexibility by separating the compute engine that analyzes your data from your storage choices. BigQuery interfaces include Google Cloud Console interface and the BigQuery command-line tool. 
 
-GCP App Engine
+Google Data Studio
 ==============================
-* Due to the issues faced with Heroku, we have hosted our uvicorn based FastAPI code on GCP App Engine. The steps for doing the same are detailed in the codelabs document linked below.
-
-
+* Data Studio is Google’s reporting solution for power users who want to go beyond the data and dashboards of Google Analytics. The data widgets in Data Studio are notable for their variety, customization options, live data and interactive controls 
+* Data visualization tools can help you make sense of your BigQuery data and help you analyze the data interactively. You can use visualization tools to help you identify trends, respond to them, and make predictions using your data. In this tutorial, you use Google Data Studio to visualize data in the BigQuery natality sample table.
 
 Web Application - Location based Nowcasting
 =============================================
 
 In this Application, we are generating the predicted images using the nowcast model by calling an API. The application asks the user to input Latitude & Longitude along with the distance based on how far they want to see the storm prediction view the predicted images along with City, State, Date, and Time. The user can mention if they would like fresh data or cached data as well as the acceptable threshold time in minuts. After giving the input we can generate the images using the nowcast model by invoking the API.
 
-Airflow
+Docker
 ==============================
-* Apache Airflow is an open-source tool programmatically author, schedule, and monitor workflows. When workflows are defined as code, they become more maintainable, versionable, testable, and collaborative. Use Airflow to author workflows as directed acyclic graphs (DAGs) of tasks. The Airflow scheduler executes your tasks on an array of workers while following the specified dependencies.
 
-*Created a DAG with 3 workflows, Selecting the popular 50 locations and hits the nowcast model to generate the images with the help of API and stores them in a Google bucket. This DAG is scheduled to run every hour so that it can store the images in a cache memory. Monitoring of the DAG 
+* Docker is a software platform that allows you to build, test, and deploy applications quickly. Docker packages software into standardized units called containers that have everything the software needs to run including libraries, system tools, code, and runtime. Using Docker, you can quickly deploy and scale applications into any environment and know your code will run.
 
-*A Virtual environment was created on Google Cloud Composer to run the Airflow and deployed the DAG in that to schedule task runs and monitor them.
+* Docker images contain all the dependencies needed to execute code inside a container, so containers that move between Docker environments with the same OS work with no changes. Docker uses resource isolation in the OS kernel to run multiple containers on the same OS.
+
 
 JWT - Authorization
 ==============================
@@ -61,10 +62,13 @@ Requirements
 * Python 3.7
 * Jupyter Notebooks
 * Google Cloud Account
-* Heroku
+* AWS
+* Docker
 * Streamlit
 * Postman
 * GCPAppEngine
+* Big Query
+* Data Studio
 
 
 

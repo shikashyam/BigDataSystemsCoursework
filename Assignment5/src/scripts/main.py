@@ -122,7 +122,7 @@ def search_by_loc(date,time,city,state):
     if((date!='')&(time!='')&(city!='')&(state!='')):
         filename,event_id,idx,eventsummary,episodesummary=searchcatalogdatetime(date,time,city,state)
         
-        inputtext=episodesummary+eventsummary
+        inputtext=str(episodesummary)+str(eventsummary)
         
         
         summary=Summarization(inputtext)
@@ -165,7 +165,7 @@ def search_by_lat_long(latitude,longitude,distancelimit):
                 summary='No Event/Episode Narratives available for the Event'
                 ner='No Event/Episode Narratives available for the Event'
             else:
-                inputtext=episodesummary+eventsummary
+                inputtext=str(episodesummary)+str(eventsummary)
                 print('LOG : SearchBy : LatLong, Refresh_flag : Y, Threshold_time : N/A, Lat :',lat,', Long :', long,', City : N/A, State : N/A, EventID :',float(event_id))
                 summary=Summarization(inputtext)
                 ner=NER(inputtext)
@@ -210,7 +210,7 @@ async def create_sevir_view(sevir: Sevir):
                 eventid=fileloc.split('.')[0]
                 
                 evsummary,evsummary=findstormdetails(float(eventid))
-                inputtext=evsummary+evsummary
+                inputtext=str(evsummary)+str(evsummary)
                 summary=Summarization(inputtext)
                 ner=NER(inputtext)
                 
@@ -257,8 +257,8 @@ async def create_sevir_view(sevir: Sevir):
             if(duration_min<=int(sevir.threshold_time)):
                 eventid=fileloc.split('.')[0]
                 
-                evsummary,evsummary=findstormdetails(float(eventid))
-                inputtext=evsummary+evsummary
+                evsummary,epsummary=findstormdetails(float(eventid))
+                inputtext=str(evsummary)+str(epsummary)
                 summary=Summarization(inputtext)
                 ner=NER(inputtext)
                 resultval={ 'result':'SUCCESS-FOUND IN CACHE',
