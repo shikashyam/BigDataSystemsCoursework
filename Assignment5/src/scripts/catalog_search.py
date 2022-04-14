@@ -8,6 +8,7 @@ Created on Thu Mar 10 14:24:15 2022
 
 from importlib.resources import path
 import h5py
+import math
 import boto3
 from botocore.handlers import disable_signing
 from os import walk
@@ -63,17 +64,21 @@ def searchgeocoordinates(approxlat,approxlong,distlimit):
         fileidx=catalog.iloc[0]['file_index']
         
         eventsummary,episodesummary=findstormdetails(event_id)
-        
-        if eventsummary is None:
-            eventsummary=''
-            episodesummary=''
-    return round(lat,6),round(long,6),event_id,filename,fileidx,eventsummary,episodesummary
+        # if eventsummary==np.nan:
+        #     eventsummary=''
+        # if episodesummary==np.nan:
+        #     episodesummary=''
+        return round(lat,6),round(long,6),event_id,filename,fileidx,eventsummary,episodesummary
 def findstormdetails(event_id):
     stormdetails_path=fs.open("gs://sevir-data-2/data/storm_details_file.csv",'rb')
     stormdetails = pd.read_csv(stormdetails_path)   
     eventsummary=stormdetails[(stormdetails['EVENT_ID']==event_id)]['EVENT_NARRATIVE'].unique()
     episodesummary=stormdetails[(stormdetails['EVENT_ID']==event_id)]['EPISODE_NARRATIVE'].unique()
-    if(np.size(eventsummary)>0):
+    if((np.size(eventsummary)>0)&(np.size(episodesummary)>0)):
+        if eventsummary==np.nan:
+            eventsummary=''
+        if episodesummary==np.nan:
+            episodesummary=''
         return eventsummary[0],episodesummary[0]
     else:
         return None,None
@@ -109,8 +114,10 @@ def searchcatalogdatetime(date,time,city,state):
     
     if(np.size(event_id)>0):
         filename,fileindex,catalog=get_filename_index(event_id[0])      
-        
-        return filename,event_id[0],fileindex[0],eventsummary[0],episodesummary[0]
+        if(np.size(fileindex)>0):
+            return filename,event_id[0],fileindex[0],eventsummary[0],episodesummary[0]
+        else:
+            return None,None,None,None,None
     else:
         return None,None,None,None,None
 def get_event_id(lat,lon):
