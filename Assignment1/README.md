@@ -58,3 +58,16 @@ Project Organization
 --------
 
 <p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
+
+Contributions Statement:
+===========================
+
+1. Shika - 60%
+* Dashboard
+* Running ipynb files
+
+2. Sai - 20%
+* Documentation
+
+3. Saketh - 20%
+* BigQuery queries for Dashboard
