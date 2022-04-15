@@ -58,3 +58,30 @@ Project Organization
 --------
 
 <p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
+
+Contributions Statement
+==============================
+Below are the contributions by the team members to create this App:
+
+1.Shika – 33.33%
+
+* Gretel API tutorial
+* Figma Wireframe
+* Documentation
+
+2. Sai – 33.3%
+
+* PyPI research
+* API research
+* Docker research
+
+3.Saketh – 33.3%
+
+* Streamlit research
+* FastAPI research
+
+
+Attestation
+==============================
+
+We attest that we have not used any other Student’s work in our code and abide by the policies listed in the Northeastern University Student Handbook regarding plagiarism and intellectual property.
