@@ -60,3 +60,15 @@ Project Organization
 --------
 
 <p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
+
+Contributions Statement:
+===========================
+
+1. Shika - 33.3%
+* Python logic to accept location and return 13 images
+
+2. Sai - 33.3%
+* Fast API implementation
+
+3. Saketh - 33.3%
+* Test cases and Documentation
