@@ -84,7 +84,7 @@ Requirements
 Technical Specifications Document
 ==============================
 This is the link to open the CLAAT document:
-https://codelabs-preview.appspot.com/?file_id=13WgeEb7XBjXLu391txQBBBCmHsl5iOAPBt3tvxx0874#0
+https://codelabs-preview.appspot.com/?file_id=1zeVjMrEuRsXl2Kw44M7lcJT9RFgQogadfa9tR4pkBTo#0
 
 User Manual for the WebApp
 ==============================
