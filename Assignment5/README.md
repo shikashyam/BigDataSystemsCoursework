@@ -17,7 +17,8 @@ The Serverless lambda functions on AWS hosts the dockerized Summarization and NE
 
 Architecture Diagram
 ==============================
-<img width="606" alt="image" src="https://user-images.githubusercontent.com/91291183/161310438-f01e7b86-429b-4b49-950c-1c0480e5ac06.png">
+![WhatsApp Image 2022-04-14 at 7 59 58 PM](https://user-images.githubusercontent.com/91291183/163495780-84abf74c-9faf-44af-8297-3a4ac480646a.jpeg)
+
 
 
 Nowcasting system
@@ -212,7 +213,7 @@ Contributions Statement
 ==============================
 Below are the contributions by the team members to create this App:
 
-1.Shika – 
+1.Shika – 40%
 
 * Python Logic – Extract event narratives and episode narratives, and call NLP APIs for summarization and NER
 * GCP BigQuery - Extract Logs from logging table and preprocess data for the Dashboard
@@ -221,7 +222,7 @@ Below are the contributions by the team members to create this App:
 * NER NLP model - Build, test, deploy, integrate
 * GCP hosting and debugging of API
 
-2. Sai – 
+2. Sai – 40%
 
 * Streamlit Frontend updates
 * GCP Cloud function to extract logs from logger to Bigquery in realtime
@@ -229,11 +230,10 @@ Below are the contributions by the team members to create this App:
 * BigQuery debugging
 * Integration Testing
 
-3.Saketh –
+3.Saketh – 20%
 
 * NER Models research
 * Documentation
-* Readme
 * Architecture Diagram
 
 
