@@ -213,7 +213,7 @@ Contributions Statement
 ==============================
 Below are the contributions by the team members to create this App:
 
-1.Shika – 40%
+1.Shika – 35%
 
 * Python Logic – Extract event narratives and episode narratives, and call NLP APIs for summarization and NER
 * GCP BigQuery - Extract Logs from logging table and preprocess data for the Dashboard
@@ -222,7 +222,7 @@ Below are the contributions by the team members to create this App:
 * NER NLP model - Build, test, deploy, integrate
 * GCP hosting and debugging of API
 
-2. Sai – 40%
+2. Sai – 35%
 
 * Streamlit Frontend updates
 * GCP Cloud function to extract logs from logger to Bigquery in realtime
@@ -230,7 +230,7 @@ Below are the contributions by the team members to create this App:
 * BigQuery debugging
 * Integration Testing
 
-3.Saketh – 20%
+3.Saketh – 30%
 
 * NER Models research
 * Documentation
